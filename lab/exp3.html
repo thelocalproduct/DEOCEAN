@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE'OCEAN | Upcoming Breeds & Experimental Lineage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-abyss: #01121d;
+            --bg-card: rgba(8, 30, 50, 0.35);
+            --accent-cyan: #00f8ff;
+            --accent-green: #00f5b4;
+            --accent-red: #ff4d4d;
+            --text-main: #f0f8ff;
+            --text-muted: #8fb1d0;
+            --border-glass: rgba(0, 248, 255, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-abyss);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 4%;
+            background: rgba(1, 18, 29, 0.95);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glass);
+            gap: 10px;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(16px, 2.5vw, 22px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(0, 248, 255, 0.5);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: clamp(8px, 1.8vw, 25px);
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: clamp(10px, 1.1vw, 13px);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: inline-block;
+        }
+
+        .nav-links > li > a:hover, .dropdown-toggle:hover, .admin-nav-btn:hover, .client-status-btn:hover, .queue-nav-btn:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 248, 255, 0.6);
+        }
+
+        .admin-nav-btn {
+            color: var(--accent-green) !important;
+            border: 1px solid rgba(0, 245, 180, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .client-status-btn {
+            color: var(--accent-cyan) !important;
+            border: 1px solid rgba(0, 248, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .queue-nav-btn {
+            color: #ffc107 !important;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .queue-badge-count {
+            background: #ffc107;
+            color: #01121d;
+            border-radius: 50%;
+            padding: 1px 5px;
+            font-size: 9px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        /* Dropdown Styling */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(1, 18, 29, 0.95);
+            backdrop-filter: blur(15px);
+            min-width: 160px;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            list-style: none;
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 15px;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 8px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-content li a:hover {
+            background: rgba(0, 248, 255, 0.15);
+            color: var(--accent-cyan);
+            padding-left: 20px;
+        }
+
+        .dropdown:hover .dropdown-content,
+        .dropdown:focus-within .dropdown-content {
+            display: block;
+        }
+
+        /* Background Parallax Layer */
+        .bg-parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background: var(--bg-abyss);
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(1, 18, 29, 0.2) 0%, rgba(1, 18, 29, 0.85) 80%, var(--bg-abyss) 100%), 
+                        url('exp3/bg.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            opacity: 1;
+            will-change: opacity;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            min-height: 45vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 120px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            background: rgba(0, 248, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 248, 255, 0.2);
+        }
+
+        .page-hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .page-hero h1 span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 20px rgba(0, 248, 255, 0.6);
+        }
+
+        .page-hero p {
+            font-size: clamp(14px, 1.8vw, 16px);
+            max-width: 600px;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Transparent Article Section */
+        .article-section {
+            padding: 40px 6% 50px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 40px 6%;
+            max-width: 900px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            width: 100%;
+        }
+
+        .article-header {
+            margin-bottom: 15px;
+        }
+
+        .article-header span {
+            color: var(--accent-green);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .article-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 2.2vw, 25px);
+            color: #fff;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        .article-body p {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .article-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Strains Section */
+        section.content-section {
+            padding: 20px 6% 80px;
+            position: relative;
+            background-color: var(--bg-abyss);
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-header span {
+            color: var(--accent-green);
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 245, 180, 0.3);
+        }
+
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(26px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-top: 8px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .strains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .strain-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .strain-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            background: rgba(8, 30, 50, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 248, 255, 0.2);
+        }
+
+        .strain-img {
+            height: 240px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.5s ease;
+        }
+
+        .strain-card:hover .strain-img {
+            transform: scale(1.03);
+        }
+
+        .strain-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(1, 18, 29, 0.85);
+            backdrop-filter: blur(5px);
+            color: var(--accent-cyan);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .strain-content {
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .strain-content h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 21px;
+            margin-bottom: 10px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .strain-content p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            font-weight: 300;
+            margin-bottom: 22px;
+            flex-grow: 1;
+        }
+
+        .strain-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 16px;
+            font-size: 13px;
+            margin-top: auto;
+        }
+
+        .price {
+            color: var(--accent-green);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 245, 180, 0.2);
+        }
+
+        .add-queue-btn {
+            background: none;
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .add-queue-btn:hover {
+            background: var(--accent-green);
+            color: var(--bg-abyss);
+            box-shadow: 0 0 10px rgba(0, 245, 180, 0.5);
+        }
+
+        /* Admin & Queue Modals Overlay */
+        #adminDashboard, #queueModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 18, 29, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 40px 5%;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            font-size: clamp(16px, 2vw, 24px);
+        }
+
+        .close-admin {
+            background: none;
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .close-admin:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 12px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .orders-table th {
+            background: rgba(0, 248, 255, 0.1);
+            color: var(--accent-cyan);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        .orders-table td {
+            color: var(--text-muted);
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.4); }
+        .status-confirmed { background: rgba(0, 245, 180, 0.2); color: var(--accent-green); border: 1px solid rgba(0, 245, 180, 0.4); }
+        .status-rejected { background: rgba(255, 77, 77, 0.2); color: var(--accent-red); border: 1px solid rgba(255, 77, 77, 0.4); }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action-confirm {
+            background: rgba(0, 245, 180, 0.15);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .btn-action-reject {
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        /* Client Status Checker Modal */
+        #statusModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 18, 29, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2500;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .status-result-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        .status-list-item {
+            background: rgba(1, 18, 29, 0.6);
+            border: 1px solid var(--border-glass);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* Notification Toast */
+        #notificationToast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 245, 180, 0.95);
+            color: #01121d;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        #notificationToast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Queue & Checkout Modal */
+        #queueModal {
+            z-index: 2500;
+            padding: 30px 4%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 25px 30px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h3 {
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .modal-subtitle {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .discount-tiers-note {
+            font-size: 10px;
+            color: var(--accent-green);
+            background: rgba(0, 245, 180, 0.08);
+            border: 1px solid rgba(0, 245, 180, 0.2);
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .queue-items-list {
+            margin-bottom: 15px;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            background: rgba(1, 18, 29, 0.5);
+            padding: 8px;
+        }
+
+        .queue-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(0, 248, 255, 0.1);
+            font-size: 12px;
+        }
+
+        .queue-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .queue-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .queue-item-controls input {
+            width: 50px;
+            padding: 3px 6px;
+            background: #01121d;
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .btn-remove-item {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-full {
+            grid-column: span 2;
+        }
+
+        .modal-box label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-box input, .modal-box select, .modal-box textarea {
+            width: 100%;
+            padding: 9px 12px;
+            margin-bottom: 10px;
+            background: rgba(1, 18, 29, 0.9);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .modal-box select option {
+            background: #01121d;
+            color: #fff;
+        }
+
+        .modal-box textarea {
+            resize: vertical;
+            height: 60px;
+        }
+
+        .total-summary-box {
+            background: rgba(0, 248, 255, 0.05);
+            border: 1px dashed var(--accent-cyan);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-summary-box .label-total {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .total-summary-box .value-total {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
+        .payment-note {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            font-style: italic;
+            margin-bottom: 15px;
+            background: rgba(0, 245, 180, 0.05);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .modal-actions button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: none;
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+        }
+
+        .btn-confirm {
+            background: var(--accent-cyan);
+            border: none;
+            color: var(--bg-abyss);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #000a12;
+            padding: 50px 6% 30px;
+            border-top: 1px solid var(--border-glass);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            letter-spacing: 4px;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(0, 248, 255, 0.4);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Screen Adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 3%;
+            }
+            .nav-links {
+                gap: 5px;
+            }
+            .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
+                font-size: 8px;
+                letter-spacing: 0.1px;
+                padding: 3px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Fade Background Layer -->
+    <div class="bg-parallax-container">
+        <div class="bg-image" id="scrollBg"></div>
+    </div>
+
+    <!-- Header / Top Bar -->
+    <header>
+        <a href="../index.html" class="logo">DE'OCEAN</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#home">HOME</a></li>
+            <li><a href="../index.html#atelier">ATELIER</a></li>
+            <li><a href="../index.html#strains">STRAINS</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">BREEDS ▾</span>
+                <ul class="dropdown-content">
+                    <li><a href="../breeds/guppy.html">Guppy</a></li>
+                    <li><a href="../breeds/betta.html">Betta</a></li>
+                    <li><a href="../breeds/discus.html">Discus</a></li>
+                    <li><a href="../breeds/arowana.html">Arowana</a></li>
+                    <li><a href="../breeds/koi.html">Koi</a></li>
+                </ul>
+            </li>
+            <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
+            <li><button class="client-status-btn" onclick="openClientStatusModal()">📦 Track</button></li>
+            <li><button class="admin-nav-btn" onclick="openAdminPanel()">⚙️ Admin</button></li>
+        </ul>
+    </header>
+
+    <!-- Upcoming Breeds Hero Section -->
+    <section class="page-hero">
+        <div class="hero-badge">Pipeline Laboratory</div>
+        <h1>Upcoming <span>Breeds</span></h1>
+        <p>A preview of our next-generation aquatic lineages currently undergoing isolation, stabilization, and pigment tuning. Mix and match different breeds to meet your combined order minimum of 6 pairs.</p>
+    </section>
+
+    <!-- Transparent Article Card Section -->
+    <div class="article-section">
+        <div class="article-card">
+            <div class="article-header">
+                <span>Atelier Protocol</span>
+                <h2>The Alchemy of Aquatic Evolution</h2>
+            </div>
+            <div class="article-body">
+                <p>At DE'OCEAN, experimental breeding transcends standard husbandry; it is a meticulous intersection of genetic art and marine science. Every lineage introduced in our pipeline goes through cycles of multi-generational isolation, precise water parameter tuning, and advanced pigment expression trials.</p>
+                <p>Curate your mixed portfolio by adding multiple upcoming strains to your booking queue below (combined minimum order requirement is 6 pairs).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Strains Gallery -->
+    <section class="content-section">
+        <div class="section-header">
+            <span>R&D Pipeline</span>
+            <h2>In Development</h2>
+        </div>
+        
+        <div class="strains-grid">
+            
+            <!-- Card 1 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('exp3/images/1.jpg');">
+                    <span class="strain-tag">NX-01</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Nebula Veil Guppy</h3>
+                    <p>Next-gen iridescent strain featuring deep cosmic blue hues and luminescent tail extensions.</p>
+                    <div class="strain-footer">
+                        <span class="price">$85.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Nebula Veil Guppy (NX-01)', 85.00)">+ Add to Queue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('exp3/images/2.jpg');">
+                    <span class="strain-tag">NX-02</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Abyssal Crown Betta</h3>
+                    <p>Experimental dark-scale morph with glowing neon fin borders and aggressive symmetry.</p>
+                    <div class="strain-footer">
+                        <span class="price">$120.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Abyssal Crown Betta (NX-02)', 120.00)">+ Add to Queue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('exp3/images/3.jpg');">
+                    <span class="strain-tag">NX-03</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Platinum Titan Discus</h3>
+                    <p>A pristine mirror-finish morph bred for extreme body width and ultra-smooth coloration.</p>
+                    <div class="strain-footer">
+                        <span class="price">$250.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Platinum Titan Discus (NX-03)', 250.00)">+ Add to Queue</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-logo">DE'OCEAN</div>
+        <p>Private Aquatic Atelier &bull; Global Inquiries: acquisition@deoceanaquatics.com</p>
+        <p style="margin-top: 15px; opacity: 0.5;">&copy; 2026 DE'OCEAN. All rights reserved.</p>
+    </footer>
+
+    <!-- Queue & Checkout Modal -->
+    <div id="queueModal">
+        <div class="modal-box">
+            <h3>Mixed Breed Acquisition Queue</h3>
+            <div class="modal-subtitle">Combined minimum order requirement is 6 pairs</div>
+            <div class="discount-tiers-note">
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–14 pairs | <strong>10% off</strong> for 15+ pairs!
+            </div>
+            
+            <label>Selected Breeds in Your Queue:</label>
+            <div class="queue-items-list" id="queueItemsContainer">
+                <!-- Dynamic Queue Rows -->
+            </div>
+
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+                <div class="form-grid">
+                    <div>
+                        <label>Phone / WhatsApp Number</label>
+                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                    </div>
+                    <div>
+                        <label>Full Name</label>
+                        <input type="text" id="buyerName" placeholder="Johnathan Doe" required>
+                    </div>
+                    <div>
+                        <label>Email Address (For Status Tracking)</label>
+                        <input type="email" id="buyerEmail" placeholder="client@domain.com" required>
+                    </div>
+                    <div class="form-full">
+                        <label>Street Address / Location</label>
+                        <input type="text" id="buyerAddress" placeholder="123 Aquatic Boulevard, Suite 4B" required>
+                    </div>
+                    <div>
+                        <label>Landmark</label>
+                        <input type="text" id="buyerLandmark" placeholder="Near Marine Science Tower">
+                    </div>
+                    <div>
+                        <label>PIN / Postal Code</label>
+                        <input type="text" id="buyerPin" placeholder="90210" required>
+                    </div>
+                    <div>
+                        <label>State / Region</label>
+                        <input type="text" id="buyerState" placeholder="California" required>
+                    </div>
+                    <div>
+                        <label>Country</label>
+                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                    </div>
+                    <div class="form-full">
+                        <label>Special Delivery Instructions (Optional)</label>
+                        <textarea id="buyerNotes" placeholder="Gate code, handling preferences, or specialized delivery timing..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Total Amount Summary & Note -->
+                <div class="total-summary-box">
+                    <div>
+                        <span class="label-total">Estimated Total Amount:</span>
+                        <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
+                    </div>
+                    <span class="value-total" id="displayTotal">$0.00</span>
+                </div>
+                <div class="payment-note">
+                    Note: Pay only after order confirmation by the administrator.
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeQueueModal()">Continue Browsing</button>
+                    <button type="submit" class="btn-confirm">Submit Combined Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Client Status Checker Modal -->
+    <div id="statusModal">
+        <div class="status-result-box">
+            <h3 style="font-family:'Cinzel',serif; color:#fff; margin-bottom:15px; font-size:18px;">Track Your Reservation Status</h3>
+            <input type="email" id="trackEmailInput" placeholder="Enter your email address" style="width:100%; padding:9px 12px; margin-bottom:10px; background:rgba(1, 18, 29, 0.9); border:1px solid var(--border-glass); border-radius:6px; color:#fff; font-size:12px;">
+            <div class="modal-actions" style="margin-bottom:15px;">
+                <button type="button" class="btn-cancel" onclick="closeClientStatusModal()">Close</button>
+                <button type="button" class="btn-confirm" onclick="checkOrderStatus()">Check Status</button>
+            </div>
+            <div id="trackResultContainer"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Overlay -->
+    <div id="adminDashboard">
+        <div class="admin-header">
+            <h2>🔒 Admin Order Chart & Feedback Control</h2>
+            <button class="close-admin" onclick="closeAdminPanel()">Close Panel</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Mixed Breeds, Qty & Total</th>
+                        <th>Client Details</th>
+                        <th>Shipping Destination</th>
+                        <th>Status & Feedback</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Dynamic Orders Injected Here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div id="notificationToast">Added to queue successfully!</div>
+
+    <!-- Scripts -->
+    <script>
+        let selectionQueue = [];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            renderOrdersTable();
+            updateQueueBadge();
+        });
+
+        // Background Smooth Fade In / Fade Out Script
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const bgElement = document.getElementById('scrollBg');
+            let opacityValue = 1 - (scrollPosition / 500);
+            if (opacityValue < 0) opacityValue = 0;
+            if (opacityValue > 1) opacityValue = 1;
+            bgElement.style.opacity = opacityValue;
+        });
+
+        function addToQueue(strainName, unitPrice) {
+            let existing = selectionQueue.find(item => item.name === strainName);
+            if (existing) {
+                existing.quantity += 2; // Add default 2 pairs increments when clicking add again
+            } else {
+                selectionQueue.push({ name: strainName, price: unitPrice, quantity: 2 });
+            }
+            updateQueueBadge();
+            showNotification(`Added ${strainName} to your queue!`);
+        }
+
+        function updateQueueBadge() {
+            let totalPairs = selectionQueue.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById("queueCountBadge").innerText = totalPairs;
+        }
+
+        function openQueueModal() {
+            if (selectionQueue.length === 0) {
+                showNotification("Your queue is currently empty. Click '+ Add to Queue' on any strain.");
+                return;
+            }
+            renderQueueItems();
+            calculateQueueTotal();
+            document.getElementById("queueModal").style.display = "flex";
+        }
+
+        function closeQueueModal() {
+            document.getElementById("queueModal").style.display = "none";
+        }
+
+        function renderQueueItems() {
+            const container = document.getElementById("queueItemsContainer");
+            if (selectionQueue.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:12px; padding:15px;">No breeds selected yet.</p>`;
+                return;
+            }
+
+            let html = "";
+            selectionQueue.forEach((item, index) => {
+                html += `
+                    <div class="queue-item-row">
+                        <div>
+                            <strong style="color:#fff;">${item.name}</strong><br>
+                            <span style="color:var(--accent-green);">$${item.price.toFixed(2)} / pair</span>
+                        </div>
+                        <div class="queue-item-controls">
+                            <label style="font-size:10px; margin:0;">Pairs:</label>
+                            <input type="number" min="2" step="2" value="${item.quantity}" onchange="updateQueueQty(${index}, this.value)">
+                            <button type="button" class="btn-remove-item" onclick="removeFromQueue(${index})">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateQueueQty(index, val) {
+            let parsed = parseInt(val, 10);
+            if (isNaN(parsed) || parsed < 2) parsed = 2;
+            selectionQueue[index].quantity = parsed;
+            updateQueueBadge();
+            calculateQueueTotal();
+        }
+
+        function removeFromQueue(index) {
+            selectionQueue.splice(index, 1);
+            updateQueueBadge();
+            renderQueueItems();
+            calculateQueueTotal();
+            if (selectionQueue.length === 0) {
+                closeQueueModal();
+            }
+        }
+
+        function calculateQueueTotal() {
+            let totalPairs = 0;
+            let subtotal = 0;
+
+            selectionQueue.forEach(item => {
+                totalPairs += item.quantity;
+                subtotal += item.quantity * item.price;
+            });
+
+            let discountMultiplier = 0;
+            let discountText = "No bulk discount applied";
+
+            if (totalPairs >= 15) {
+                discountMultiplier = 0.10;
+                discountText = "Applied: 10% Off (15+ pairs)";
+            } else if (totalPairs >= 10 && totalPairs <= 14) {
+                discountMultiplier = 0.05;
+                discountText = "Applied: 5% Off (10–14 pairs)";
+            }
+
+            let discountAmount = subtotal * discountMultiplier;
+            let finalTotal = subtotal - discountAmount;
+
+            document.getElementById("displayTotal").innerText = `$${finalTotal.toFixed(2)}`;
+            document.getElementById("appliedDiscountLabel").innerText = discountText;
+            return { totalPairs, finalTotal };
+        }
+
+        function submitReservation(event) {
+            event.preventDefault();
+            
+            let calculation = calculateQueueTotal();
+            if (calculation.totalPairs < 6) {
+                alert("Error: Combined minimum order requirement is 6 pairs across your selected breeds.");
+                return;
+            }
+
+            let summaryStrainString = selectionQueue.map(i => `${i.quantity}x ${i.name}`).join(", ");
+            let calculatedTotalPrice = `$${calculation.finalTotal.toFixed(2)}`;
+
+            const name = document.getElementById("buyerName").value;
+            const email = document.getElementById("buyerEmail").value.trim().toLowerCase();
+            const phone = document.getElementById("buyerPhone").value;
+            const address = document.getElementById("buyerAddress").value;
+            const landmark = document.getElementById("buyerLandmark").value || "None";
+            const pin = document.getElementById("buyerPin").value;
+            const state = document.getElementById("buyerState").value;
+            const country = document.getElementById("buyerCountry").value;
+            const notes = document.getElementById("buyerNotes").value || "None";
+            const timestamp = new Date().toLocaleString();
+
+            const newOrder = {
+                id: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timestamp,
+                strain: summaryStrainString,
+                price: calculatedTotalPrice,
+                quantity: `${calculation.totalPairs} Pairs Total`,
+                name: name,
+                email: email,
+                phone: phone,
+                address: `${address}, Landmark: ${landmark}, PIN: ${pin}, State: ${state}, Country: ${country}`,
+                notes: notes,
+                status: 'Pending',
+                feedback: 'Your mixed-breed advanced booking request is received and under review. Pay only after confirmation.'
+            };
+
+            let orders = JSON.parse(localStorage.getItem("deocean_orders")) || [];
+            orders.unshift(newOrder);
+            localStorage.setItem("deocean_orders", JSON.stringify(orders));
+
+            selectionQueue = [];
+            updateQueueBadge();
+            closeQueueModal();
+            document.getElementById("reservationForm").reset();
+            showNotification(`Successfully submitted your mixed-breed booking request!`);
+            renderOrdersTable();
+        }
+
+        function showNotification(message) {
+            const toast = document.getElementById("notificationToast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 4000);
+        }
+
+        function openAdminPanel() {
+            renderOrdersTable();
+            document.getElementById("adminDashboard").style.display = "block";
+        }
+
+        function closeAdminPanel() {
+            document.getElementById("adminDashboard").style.display = "none";
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.getElementById("ordersTableBody");
+            const orders = JSON.parse(localStorage.getItem("deocean_orders")) || [];
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="no-orders">No reservations or orders recorded yet.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            orders.forEach((order, index) => {
+                let badgeClass = "status-pending";
+                if(order.status === 'Confirmed') badgeClass = "status-confirmed";
+                if(order.status === 'Rejected') badgeClass = "status-rejected";
+
+                html += `
+                    <tr>
+                        <td>${order.time}</td>
+                        <td><strong>${order.strain}</strong><br><span style="color:var(--accent-cyan);">Total Qty: ${order.quantity}</span><br><span style="color:var(--accent-green);">Total Amount: ${order.price}</span></td>
+                        <td>${order.name}<br><small>${order.email}</small><br><small>${order.phone}</small></td>
+                        <td><small>${order.address}</small><br><small style="color:var(--accent-cyan);">Notes: ${order.notes}</small></td>
+                        <td>
+                            <span class="status-badge ${badgeClass}">${order.status}</span><br>
+                            <small style="color:var(--text-muted);">Feedback: ${order.feedback}</small>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action-confirm" onclick="updateOrderStatus(${index}, 'Confirmed')">Confirm</button>
+                                <button class="btn-action-reject" onclick="updateOrderStatus(${index}, 'Rejected')">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function updateOrderStatus(index, newStatus) {
+            let orders = JSON.parse(localStorage.getItem("deocean_orders")) || [];
+            let defaultFeedback = newStatus === 'Confirmed' ? 
+                "Good news! Your mixed-breed booking has been confirmed. You may now proceed with payment instructions." : 
+                "We regret to inform you that your booking request could not be fulfilled at this time.";
+
+            let customFeedback = prompt(`Provide feedback message for the customer (${newStatus}):`, defaultFeedback);
+            if(customFeedback !== null) {
+                orders[index].status = newStatus;
+                orders[index].feedback = customFeedback;
+                localStorage.setItem("deocean_orders", JSON.stringify(orders));
+                renderOrdersTable();
+                showNotification(`Order marked as ${newStatus}`);
+            }
+        }
+
+        function openClientStatusModal() {
+            document.getElementById("statusModal").style.display = "flex";
+            document.getElementById("trackResultContainer").innerHTML = "";
+            document.getElementById("trackEmailInput").value = "";
+        }
+
+        function closeClientStatusModal() {
+            document.getElementById("statusModal").style.display = "none";
+        }
+
+        function checkOrderStatus() {
+            const inputEmail = document.getElementById("trackEmailInput").value.trim().toLowerCase();
+            const container = document.getElementById("trackResultContainer");
+            
+            if(!inputEmail) {
+                container.innerHTML = `<p style="color:var(--accent-red); font-size:12px;">Please enter your email address.</p>`;
+                return;
+            }
+
+            let orders = JSON.parse(localStorage.getItem("deocean_orders")) || [];
+            const userOrders = orders.filter(o => o.email === inputEmail);
+
+            if(userOrders.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); font-size:12px;">No orders found associated with this email address.</p>`;
+                return;
+            }
+
+            let html = "";
+            userOrders.forEach(o => {
+                let badgeClass = "status-pending";
+                if(o.status === 'Confirmed') badgeClass = "status-confirmed";
+                if(o.status === 'Rejected') badgeClass = "status-rejected";
+
+                html += `
+                    <div class="status-list-item">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <strong style="color:#fff; font-size:13px;">${o.strain}</strong>
+                            <span class="status-badge ${badgeClass}">${o.status}</span>
+                        </div>
+                        <p style="font-size:11px; color:var(--accent-cyan); margin-bottom:2px;">${o.quantity}</p>
+                        <p style="font-size:11px; color:var(--accent-green); margin-bottom:4px;">Total Amount: ${o.price}</p>
+                        <p style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Booked on: ${o.time}</p>
+                        <p style="font-size:12px; color:var(--text-main);"><strong>Admin Feedback:</strong> ${o.feedback}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+
+</body>
+</html>

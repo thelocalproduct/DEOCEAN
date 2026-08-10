@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE'OCEAN | The Curator's Lookbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-abyss: #01121d;
+            --bg-card: rgba(8, 30, 50, 0.75);
+            --accent-cyan: #00f8ff;
+            --accent-green: #00f5b4;
+            --text-main: #f0f8ff;
+            --text-muted: #8fb1d0;
+            --border-glass: rgba(0, 248, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-abyss);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(1, 18, 29, 0.98);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(0, 248, 255, 0.5);
+            text-decoration: none;
+        }
+
+        .back-home {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Fixed Background That Fades & Blends on Scroll */
+        .lookbook-bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(1, 18, 29, 0.4) 0%, rgba(1, 18, 29, 0.9) 85%, var(--bg-abyss) 100%), 
+                        url('article/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: var(--hero-opacity, 1);
+            filter: blur(var(--bg-blur, 0px));
+            mix-blend-mode: luminosity;
+            transition: opacity 0.05s ease-out, filter 0.05s ease-out;
+            pointer-events: none;
+        }
+
+        /* Cinematic Lookbook Hero */
+        .lookbook-hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lookbook-hero span {
+            color: var(--accent-green);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 245, 180, 0.3);
+        }
+
+        .lookbook-hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+        }
+
+        .lookbook-hero p {
+            font-size: clamp(14px, 1.8vw, 18px);
+            max-width: 650px;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Cinematic Lookbook Chapters */
+        .lookbook-chapter {
+            min-height: 85vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            padding: 80px 8%;
+            border-bottom: 1px solid var(--border-glass);
+            position: relative;
+            z-index: 1;
+            background-color: var(--bg-abyss);
+        }
+
+        .lookbook-chapter:nth-child(even) {
+            direction: rtl;
+        }
+
+        .lookbook-chapter:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .chapter-text span {
+            color: var(--accent-cyan);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .chapter-text h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(26px, 3.5vw, 38px);
+            color: #fff;
+            margin: 10px 0 20px;
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+
+        .chapter-text p {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .chapter-img {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px rgba(0, 248, 255, 0.1);
+        }
+
+        .chapter-img img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .chapter-img:hover img {
+            transform: scale(1.03);
+        }
+
+        footer {
+            background: #000a12;
+            padding: 50px 5%;
+            border-top: 1px solid var(--border-glass);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 900px) {
+            .lookbook-chapter {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 60px 5%;
+            }
+            .lookbook-chapter:nth-child(even) {
+                direction: ltr;
+            }
+            .chapter-img img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Background Fading & Blending Element -->
+    <div class="lookbook-bg-fixed"></div>
+
+    <header>
+        <a href="index.html" class="logo">DE'OCEAN</a>
+        <a href="index.html" class="back-home">&larr; Return to Atelier</a>
+    </header>
+
+    <!-- Lookbook Hero -->
+    <section class="lookbook-hero">
+        <span>Curator's Edition &bull; Haute Aquatics</span>
+        <h1>Living Art, Engineered</h1>
+        <p>A visual exploration into high-end aquatic craftsmanship, elite genetic selection, and uncompromising luxury.</p>
+    </section>
+
+    <!-- Chapter 1 -->
+    <section class="lookbook-chapter">
+        <div class="chapter-text">
+            <span>Chapter I</span>
+            <h2>Beyond Commercial Boundaries</h2>
+            <p>At DE'OCEAN, breeding is approached as high art and science combined. Every single fish strain is curated through generations of careful selection, resulting in striking color morphs and vibrant, resilient genetics unavailable in standard commercial markets.</p>
+            <p>We reject mass production in favor of meticulous generational isolation, locking in vivid chromatic patterns and majestic structural anatomy.</p>
+        </div>
+        <div class="chapter-img">
+            <img src="article/images/1.jpg" alt="DE'OCEAN Lab Custom Setup">
+        </div>
+    </section>
+
+    <!-- Chapter 2 -->
+    <section class="lookbook-chapter">
+        <div class="chapter-text">
+            <span>Chapter II</span>
+            <h2>Pristine Water Craftsmanship</h2>
+            <p>Our custom aquatic setups mimic natural biospheres down to the microscopic level. By precisely calibrating parameters, we guarantee optimal health, unmatched pigment brilliance, and extraordinary vitality for every specimen.</p>
+            <p>From obsidian-scaled Bettas to pristine Masterline Discus, each specimen develops in an ecosystem engineered specifically for absolute biological perfection.</p>
+        </div>
+        <div class="chapter-img">
+            <img src="article/images/2.jpg" alt="Exclusive Morph Specimen">
+        </div>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section class="lookbook-chapter">
+        <div class="chapter-text">
+            <span>Chapter III</span>
+            <h2>The Private Acquisition Model</h2>
+            <p>To preserve the absolute highest standards of quality and ensure the well-being of our live art, DE'OCEAN operates entirely on an exclusive acquisition framework.</p>
+            <p>Collectors curate mixed-breed orders through our interactive queue, benefiting from automated volume tier discounts, direct administrator review, and secure, tracked transport planning.</p>
+        </div>
+        <div class="chapter-img">
+            <img src="article/images/3.jpg" alt="Luxury Aquascape Centerpiece">
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 DE'OCEAN. All rights reserved. &bull; acquisition@deoceanaquatics.com</p>
+    </footer>
+
+    <script>
+        // Background fade-out/in and dynamic blend/blur scroll effect using article/bg.jpg
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.lookbook-hero');
+            if (hero) {
+                const scrollPosition = window.scrollY;
+                const heroHeight = hero.offsetHeight;
+                let opacity = 1 - (scrollPosition / heroHeight);
+                if (opacity < 0) opacity = 0;
+                if (opacity > 1) opacity = 1;
+
+                // Adds a subtle blending blur effect as you scroll away from the hero
+                let blurAmount = (scrollPosition / heroHeight) * 12;
+                if (blurAmount > 12) blurAmount = 12;
+
+                document.documentElement.style.setProperty('--hero-opacity', opacity);
+                document.documentElement.style.setProperty('--bg-blur', `${blurAmount}px`);
+            }
+        });
+    </script>
+</body>
+</html>

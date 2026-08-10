@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE'OCEAN | Haute Aquatics & Custom Genetics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-abyss: #01121d;
+            --bg-card: rgba(8, 30, 50, 0.75);
+            --accent-cyan: #00f8ff;
+            --accent-green: #00f5b4;
+            --accent-red: #ff4d4d;
+            --text-main: #f0f8ff;
+            --text-muted: #8fb1d0;
+            --border-glass: rgba(0, 248, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-abyss);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Navigation & Mobile Hamburger Enhancements */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 4%;
+            background: rgba(1, 18, 29, 0.98);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(16px, 2.2vw, 24px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(0, 248, 255, 0.5);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: clamp(8px, 1.5vw, 25px);
+            align-items: center;
+        }
+
+        .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: clamp(10px, 1.1vw, 13px);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: inline-block;
+        }
+
+        .nav-links > li > a:hover, .dropdown-toggle:hover, .admin-nav-btn:hover, .client-status-btn:hover, .queue-nav-btn:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 248, 255, 0.6);
+        }
+
+        .admin-nav-btn {
+            color: var(--accent-green) !important;
+            border: 1px solid rgba(0, 245, 180, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .client-status-btn {
+            color: var(--accent-cyan) !important;
+            border: 1px solid rgba(0, 248, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .queue-nav-btn {
+            color: var(--accent-green) !important;
+            border: 1px solid rgba(0, 245, 180, 0.3);
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(0, 245, 180, 0.08);
+            position: relative;
+        }
+
+        .queue-badge-count {
+            background: var(--accent-green);
+            color: #01121d;
+            border-radius: 50%;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 3px;
+        }
+
+        /* Mobile Hamburger Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-glass);
+            color: var(--accent-cyan);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Dropdown Styling */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(1, 18, 29, 0.98);
+            backdrop-filter: blur(15px);
+            min-width: 160px;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            list-style: none;
+            padding: 10px 0;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 15px;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 8px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-content li a:hover {
+            background: rgba(0, 248, 255, 0.1);
+            color: var(--accent-cyan);
+            padding-left: 20px;
+        }
+
+        .dropdown:hover .dropdown-content,
+        .dropdown:focus-within .dropdown-content {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(1, 18, 29, 0.3) 0%, rgba(1, 18, 29, 0.9) 85%, var(--bg-abyss) 100%), 
+                        url('bg.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            z-index: -1;
+            opacity: var(--hero-opacity, 1);
+            transition: opacity 0.05s ease-out;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            background: rgba(0, 248, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 248, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(32px, 6vw, 64px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 20px rgba(0, 248, 255, 0.6);
+        }
+
+        .hero p {
+            font-size: clamp(14px, 1.8vw, 17px);
+            max-width: 650px;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-weight: 300;
+            padding: 0 10px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
+            color: #01121d;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 25px rgba(0, 248, 255, 0.4);
+            min-height: 44px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(0, 248, 255, 0.7);
+        }
+
+        /* Sections General */
+        section {
+            padding: 80px 5%;
+            position: relative;
+            background-color: var(--bg-abyss);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header span {
+            color: var(--accent-green);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 245, 180, 0.3);
+        }
+
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(24px, 3.5vw, 42px);
+            font-weight: 700;
+            margin-top: 8px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Grid Alignment */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .showcase-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 300;
+            font-size: clamp(13px, 1.5vw, 15px);
+        }
+
+        .showcase-img-box {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 248, 255, 0.15);
+        }
+
+        .showcase-img-box img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .showcase-img-box:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Strains Grid */
+        .strains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .strain-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+        .strain-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 248, 255, 0.25);
+        }
+
+        .strain-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .strain-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(1, 18, 29, 0.85);
+            backdrop-filter: blur(5px);
+            color: var(--accent-cyan);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .strain-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .strain-content h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .strain-content p {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 300;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+
+        .strain-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 14px;
+            font-size: 12px;
+            margin-top: auto;
+            gap: 10px;
+        }
+
+        .price {
+            color: var(--accent-green);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .view-details-link {
+            background: none;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-details-link:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-abyss);
+        }
+
+        /* Admin & Queue Modals Overlay */
+        #adminDashboard, #queueModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 18, 29, 0.96);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 30px 4%;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .admin-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            font-size: clamp(14px, 1.8vw, 22px);
+        }
+
+        .close-admin {
+            background: none;
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            min-height: 36px;
+        }
+
+        .close-admin:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 11px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .orders-table th {
+            background: rgba(0, 248, 255, 0.1);
+            color: var(--accent-cyan);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        .orders-table td {
+            color: var(--text-muted);
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 9.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.4); }
+        .status-confirmed { background: rgba(0, 245, 180, 0.2); color: var(--accent-green); border: 1px solid rgba(0, 245, 180, 0.4); }
+        .status-rejected { background: rgba(255, 77, 77, 0.2); color: var(--accent-red); border: 1px solid rgba(255, 77, 77, 0.4); }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action-confirm, .btn-action-reject {
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            min-height: 32px;
+        }
+
+        .btn-action-confirm {
+            background: rgba(0, 245, 180, 0.15);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .btn-action-reject {
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        /* Client Status Checker Modal */
+        #statusModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 18, 29, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 2500;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .status-result-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 24px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        .status-list-item {
+            background: rgba(1, 18, 29, 0.7);
+            border: 1px solid var(--border-glass);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* Notification Toast */
+        #notificationToast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            left: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(0, 245, 180, 0.95);
+            color: #01121d;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        #notificationToast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Queue & Checkout Modal */
+        #queueModal {
+            z-index: 2500;
+            padding: 20px 4%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 24px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 580px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h3 {
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .modal-subtitle {
+            font-size: 10px;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .discount-tiers-note {
+            font-size: 10px;
+            color: var(--accent-green);
+            background: rgba(0, 245, 180, 0.08);
+            border: 1px solid rgba(0, 245, 180, 0.2);
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .queue-items-list {
+            margin-bottom: 15px;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            max-height: 160px;
+            overflow-y: auto;
+            background: rgba(1, 18, 29, 0.6);
+            padding: 8px;
+        }
+
+        .queue-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(0, 248, 255, 0.1);
+            font-size: 11px;
+            gap: 10px;
+        }
+
+        .queue-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .queue-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .queue-item-controls input {
+            width: 48px;
+            padding: 4px;
+            background: #01121d;
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+            min-height: 32px;
+        }
+
+        .btn-remove-item {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-full {
+            grid-column: span 2;
+        }
+
+        .modal-box label {
+            display: block;
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-box input, .modal-box select, .modal-box textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            background: rgba(1, 18, 29, 0.95);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13px;
+            min-height: 42px;
+        }
+
+        .modal-box select option {
+            background: #01121d;
+            color: #fff;
+        }
+
+        .modal-box textarea {
+            resize: vertical;
+            height: 70px;
+        }
+
+        .total-summary-box {
+            background: rgba(0, 248, 255, 0.05);
+            border: 1px dashed var(--accent-cyan);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-summary-box .label-total {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .total-summary-box .value-total {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
+        .payment-note {
+            font-size: 10.5px;
+            color: var(--accent-cyan);
+            font-style: italic;
+            margin-bottom: 15px;
+            background: rgba(0, 245, 180, 0.05);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .modal-actions button {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            min-height: 42px;
+        }
+
+        .btn-cancel {
+            background: none;
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+        }
+
+        .btn-confirm {
+            background: var(--accent-cyan);
+            border: none;
+            color: var(--bg-abyss);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #000a12;
+            padding: 50px 5% 30px;
+            border-top: 1px solid var(--border-glass);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 248, 255, 0.4);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Fully Optimized Mobile Screen Adaptation (Media Queries) */
+        @media (max-width: 900px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: rgba(1, 18, 29, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px 6%;
+                gap: 15px;
+                border-bottom: 1px solid var(--border-glass);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .nav-links.mobile-active {
+                max-height: 450px;
+                opacity: 1;
+                visibility: visible;
+                padding-bottom: 25px;
+            }
+
+            .nav-links > li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
+                display: block;
+                width: 100%;
+                padding: 10px 0;
+                font-size: 13px;
+                letter-spacing: 1px;
+            }
+
+            .admin-nav-btn, .client-status-btn, .queue-nav-btn {
+                background: rgba(0, 248, 255, 0.05);
+                border-radius: 6px;
+            }
+
+            .dropdown-content {
+                position: static;
+                transform: none;
+                background: rgba(0, 0, 0, 0.2);
+                border: none;
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+                margin-top: 5px;
+            }
+
+            .dropdown:hover .dropdown-content,
+            .dropdown:focus-within .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content li a {
+                padding: 8px;
+                text-align: center;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: span 1;
+            }
+
+            section {
+                padding: 60px 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">DE'OCEAN</a>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">☰</button>
+        <ul class="nav-links" id="navLinksContainer">
+            <li><a href="#home" onclick="closeMobileMenu()">HOME</a></li>
+            <li><a href="#atelier" onclick="closeMobileMenu()">ATELIER</a></li>
+            <li><a href="#strains" onclick="closeMobileMenu()">STRAINS</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">BREEDS ▾</span>
+                <ul class="dropdown-content">
+                    <li><a href="breeds/guppy.html">Guppy</a></li>
+                    <li><a href="breeds/betta.html">Betta</a></li>
+                    <li><a href="breeds/discus.html">Discus</a></li>
+                    <li><a href="breeds/arowana.html">Arowana</a></li>
+                    <li><a href="breeds/koi.html">Koi</a></li>
+                </ul>
+            </li>
+            <li><button class="queue-nav-btn" onclick="openQueueModal(); closeMobileMenu();">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
+            <li><button class="client-status-btn" onclick="openClientStatusModal(); closeMobileMenu();">📦 Track Status</button></li>
+            <li><button class="admin-nav-btn" onclick="openAdminPanel(); closeMobileMenu();">⚙️ Admin Panel</button></li>
+        </ul>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-badge">Haute Aquatics & Custom Genetics</div>
+        <h1>Living Art, <span>Engineered</span></h1>
+        <p>Pioneering ultra-exclusive, lab-bred aquatic specimens through meticulous genetic experimentation and pristine water craftsmanship.</p>
+        <a href="#strains" class="btn-primary">Explore Available Strains</a>
+    </section>
+
+    <!-- Atelier / Experimental Section -->
+    <section id="atelier">
+        <div class="section-header">
+            <span>Mastery & Precision</span>
+            <h2>The Experimental Process</h2>
+        </div>
+        <div class="showcase-grid">
+            <div class="showcase-text">
+                <p>At DE'OCEAN, breeding is approached as high art and science combined. Every single fish strain is curated through generations of careful selection, resulting in striking color morphs and vibrant, resilient genetics unavailable in standard commercial markets.</p>
+                <p>Our custom aquatic setups mimic pristine natural ecosystems down to the microscopic level, guaranteeing optimal health, unmatched pigment brilliance, and extraordinary vitality for every specimen.</p>
+                <a href="article.html" class="btn-primary" style="margin-top: 10px;">Commission a Specimen</a>
+            </div>
+            <div class="showcase-img-box">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=90" alt="Luxury Aquascape">
+            </div>
+        </div>
+    </section>
+
+    <!-- Rare Strains Gallery -->
+    <section id="strains" style="background: rgba(1, 18, 29, 0.4);">
+        <div class="section-header">
+            <span>Exclusive Catalog</span>
+            <h2>Current Experimental Morphs</h2>
+        </div>
+        
+        <div class="strains-grid">
+            
+            <!-- Card 1 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('lab/images/1.jpg');">
+                    <span class="strain-tag">GU-01</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Guppy Lineage</h3>
+                    <p>Engineered vibrant multi-color strains showcasing high-extension veil fins and unmatched genetic resilience.</p>
+                    <div class="strain-footer">
+                        <span class="price">$85.00 / Pair</span>
+                        <div class="card-buttons">
+                            <a href="lab/exp1.html" class="view-details-link">Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('lab/images/2.jpg');">
+                    <span class="strain-tag">BT-01</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Betta Splendens</h3>
+                    <p>Royal grade specimens featuring metallic scale scaling, deep obsidian backdrops, and majestic fin architecture.</p>
+                    <div class="strain-footer">
+                        <span class="price">$120.00 / Pair</span>
+                        <div class="card-buttons">
+                            <a href="lab/exp2.html" class="view-details-link">Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="strain-card">
+                <div class="strain-img" style="background-image: url('lab/images/3.jpg');">
+                    <span class="strain-tag">DS-01</span>
+                </div>
+                <div class="strain-content">
+                    <h3>Discus Masterline</h3>
+                    <p>The undisputed king of the aquarium, bred for symmetrical body geometry and rich, saturated chromatic patterns.</p>
+                    <div class="strain-footer">
+                        <span class="price">$250.00 / Pair</span>
+                        <div class="card-buttons">
+                            <a href="lab/exp3.html" class="view-details-link">Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-logo">DE'OCEAN</div>
+        <p>Private Aquatic Atelier &bull; Global Inquiries: acquisition@deoceanaquatics.com</p>
+        <p style="margin-top: 15px; opacity: 0.5;">&copy; 2026 DE'OCEAN. All rights reserved.</p>
+    </footer>
+
+    <!-- Queue & Checkout Modal -->
+    <div id="queueModal">
+        <div class="modal-box">
+            <h3>Mixed Breed Acquisition Queue</h3>
+            <div class="modal-subtitle">Combined minimum order requirement is 6 pairs</div>
+            <div class="discount-tiers-note">
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–14 pairs | <strong>10% off</strong> for 15+ pairs!
+            </div>
+            
+            <label>Selected Breeds in Your Queue:</label>
+            <div class="queue-items-list" id="queueItemsContainer">
+                <!-- Dynamic Queue Rows -->
+            </div>
+
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+                <div class="form-grid">
+                    <div>
+                        <label>Phone / WhatsApp Number</label>
+                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                    </div>
+                    <div>
+                        <label>Full Name</label>
+                        <input type="text" id="buyerName" placeholder="Johnathan Doe" required>
+                    </div>
+                    <div>
+                        <label>Email Address (For Status Tracking)</label>
+                        <input type="email" id="buyerEmail" placeholder="client@domain.com" required>
+                    </div>
+                    <div class="form-full">
+                        <label>Street Address / Location</label>
+                        <input type="text" id="buyerAddress" placeholder="123 Aquatic Boulevard, Suite 4B" required>
+                    </div>
+                    <div>
+                        <label>Landmark</label>
+                        <input type="text" id="buyerLandmark" placeholder="Near Marine Science Tower">
+                    </div>
+                    <div>
+                        <label>PIN / Postal Code</label>
+                        <input type="text" id="buyerPin" placeholder="90210" required>
+                    </div>
+                    <div>
+                        <label>State / Region</label>
+                        <input type="text" id="buyerState" placeholder="California" required>
+                    </div>
+                    <div>
+                        <label>Country</label>
+                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                    </div>
+                    <div class="form-full">
+                        <label>Special Delivery Instructions (Optional)</label>
+                        <textarea id="buyerNotes" placeholder="Gate code, handling preferences, or specialized delivery timing..."></textarea>
+                    </div>
+                </div>
+
+                <div class="total-summary-box">
+                    <div>
+                        <span class="label-total">Estimated Total Amount:</span>
+                        <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
+                    </div>
+                    <span class="value-total" id="displayTotal">$0.00</span>
+                </div>
+                <div class="payment-note">
+                    Note: Pay only after order confirmation by the administrator.
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeQueueModal()">Continue Browsing</button>
+                    <button type="submit" class="btn-confirm">Submit Combined Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Client Status Checker Modal -->
+    <div id="statusModal">
+        <div class="status-result-box">
+            <h3 style="font-family:'Cinzel',serif; color:#fff; margin-bottom:12px; font-size:16px;">Track Your Reservation Status</h3>
+            <input type="email" id="trackEmailInput" placeholder="Enter your email address">
+            <div class="modal-actions" style="margin-bottom:12px;">
+                <button type="button" class="btn-cancel" onclick="closeClientStatusModal()">Close</button>
+                <button type="button" class="btn-confirm" onclick="checkOrderStatus()">Check Status</button>
+            </div>
+            <div id="trackResultContainer"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Overlay -->
+    <div id="adminDashboard">
+        <div class="admin-header">
+            <h2>🔒 Admin Order Chart & Feedback Control</h2>
+            <button class="close-admin" onclick="closeAdminPanel()">Close Panel</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Mixed Breeds, Qty & Total</th>
+                        <th>Client Details</th>
+                        <th>Shipping Destination</th>
+                        <th>Status & Feedback</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Dynamic Orders Injected Here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div id="notificationToast">Notification message</div>
+
+    <!-- Scripts -->
+    <script>
+        const ORDERS_STORAGE_KEY = "deocean_orders";
+        const QUEUE_STORAGE_KEY = "deocean_queue"; 
+        let selectionQueue = [];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadQueueFromStorage();
+            renderOrdersTable();
+
+            window.addEventListener("storage", function(e) {
+                if (e.key === QUEUE_STORAGE_KEY) {
+                    loadQueueFromStorage();
+                }
+                if (e.key === ORDERS_STORAGE_KEY) {
+                    renderOrdersTable();
+                }
+            });
+        });
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById("navLinksContainer");
+            nav.classList.toggle("mobile-active");
+        }
+
+        function closeMobileMenu() {
+            const nav = document.getElementById("navLinksContainer");
+            nav.classList.remove("mobile-active");
+        }
+
+        function loadQueueFromStorage() {
+            const savedQueue = localStorage.getItem(QUEUE_STORAGE_KEY);
+            if (savedQueue) {
+                try {
+                    selectionQueue = JSON.parse(savedQueue);
+                } catch (err) {
+                    selectionQueue = [];
+                }
+            } else {
+                selectionQueue = [];
+            }
+            updateQueueBadge();
+        }
+
+        function saveQueueToStorage() {
+            localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(selectionQueue));
+            updateQueueBadge();
+        }
+
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                const scrollPosition = window.scrollY;
+                const heroHeight = hero.offsetHeight;
+                let opacity = 1 - (scrollPosition / heroHeight);
+                if (opacity < 0) opacity = 0;
+                if (opacity > 1) opacity = 1;
+                hero.style.setProperty('--hero-opacity', opacity);
+            }
+        });
+
+        function updateQueueBadge() {
+            let totalPairs = selectionQueue.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById("queueCountBadge");
+            if (badge) badge.innerText = totalPairs;
+        }
+
+        function openQueueModal() {
+            loadQueueFromStorage();
+            if (selectionQueue.length === 0) {
+                showNotification("Your queue is currently empty.");
+                return;
+            }
+            renderQueueItems();
+            calculateQueueTotal();
+            document.getElementById("queueModal").style.display = "flex";
+        }
+
+        function closeQueueModal() {
+            document.getElementById("queueModal").style.display = "none";
+        }
+
+        function renderQueueItems() {
+            const container = document.getElementById("queueItemsContainer");
+            if (selectionQueue.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:11px; padding:12px;">No breeds selected yet.</p>`;
+                return;
+            }
+
+            let html = "";
+            selectionQueue.forEach((item, index) => {
+                html += `
+                    <div class="queue-item-row">
+                        <div>
+                            <strong style="color:#fff;">${item.name}</strong><br>
+                            <span style="color:var(--accent-green);">$${item.price.toFixed(2)} / pair</span>
+                        </div>
+                        <div class="queue-item-controls">
+                            <label style="font-size:9px; margin:0;">Pairs:</label>
+                            <input type="number" min="2" step="2" value="${item.quantity}" onchange="updateQueueQty(${index}, this.value)">
+                            <button type="button" class="btn-remove-item" onclick="removeFromQueue(${index})">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateQueueQty(index, val) {
+            let parsed = parseInt(val, 10);
+            if (isNaN(parsed) || parsed < 2) parsed = 2;
+            selectionQueue[index].quantity = parsed;
+            saveQueueToStorage();
+            calculateQueueTotal();
+        }
+
+        function removeFromQueue(index) {
+            selectionQueue.splice(index, 1);
+            saveQueueToStorage();
+            renderQueueItems();
+            calculateQueueTotal();
+            if (selectionQueue.length === 0) {
+                closeQueueModal();
+            }
+        }
+
+        function calculateQueueTotal() {
+            let totalPairs = 0;
+            let subtotal = 0;
+
+            selectionQueue.forEach(item => {
+                totalPairs += item.quantity;
+                subtotal += item.quantity * item.price;
+            });
+
+            let discountMultiplier = 0;
+            let discountText = "No bulk discount applied";
+
+            if (totalPairs >= 15) {
+                discountMultiplier = 0.10;
+                discountText = "Applied: 10% Off (15+ pairs)";
+            } else if (totalPairs >= 10 && totalPairs <= 14) {
+                discountMultiplier = 0.05;
+                discountText = "Applied: 5% Off (10–14 pairs)";
+            }
+
+            let discountAmount = subtotal * discountMultiplier;
+            let finalTotal = subtotal - discountAmount;
+
+            document.getElementById("displayTotal").innerText = `$${finalTotal.toFixed(2)}`;
+            document.getElementById("appliedDiscountLabel").innerText = discountText;
+            return { totalPairs, finalTotal };
+        }
+
+        function submitReservation(event) {
+            event.preventDefault();
+            
+            let calculation = calculateQueueTotal();
+            if (calculation.totalPairs < 6) {
+                alert("Error: Combined minimum order requirement is 6 pairs across your selected breeds.");
+                return;
+            }
+
+            let summaryStrainString = selectionQueue.map(i => `${i.quantity}x ${i.name}`).join(", ");
+            let calculatedTotalPrice = `$${calculation.finalTotal.toFixed(2)}`;
+
+            const name = document.getElementById("buyerName").value;
+            const email = document.getElementById("buyerEmail").value.trim().toLowerCase();
+            const phone = document.getElementById("buyerPhone").value;
+            const address = document.getElementById("buyerAddress").value;
+            const landmark = document.getElementById("buyerLandmark").value || "None";
+            const pin = document.getElementById("buyerPin").value;
+            const state = document.getElementById("buyerState").value;
+            const country = document.getElementById("buyerCountry").value;
+            const notes = document.getElementById("buyerNotes").value || "None";
+            const timestamp = new Date().toLocaleString();
+
+            const newOrder = {
+                id: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
+                time: timestamp,
+                strain: summaryStrainString,
+                price: calculatedTotalPrice,
+                quantity: `${calculation.totalPairs} Pairs Total`,
+                name: name,
+                email: email,
+                phone: phone,
+                address: `${address}, Landmark: ${landmark}, PIN: ${pin}, State: ${state}, Country: ${country}`,
+                notes: notes,
+                status: 'Pending',
+                feedback: 'Your mixed-breed advanced booking request is received and under review. Pay only after confirmation.'
+            };
+
+            let orders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY)) || [];
+            orders.unshift(newOrder);
+            localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+
+            selectionQueue = [];
+            saveQueueToStorage();
+            closeQueueModal();
+            document.getElementById("reservationForm").reset();
+            showNotification(`Successfully submitted your mixed-breed booking request!`);
+            renderOrdersTable();
+        }
+
+        function showNotification(message) {
+            const toast = document.getElementById("notificationToast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 4000);
+        }
+
+        function openAdminPanel() {
+            renderOrdersTable();
+            document.getElementById("adminDashboard").style.display = "block";
+        }
+
+        function closeAdminPanel() {
+            document.getElementById("adminDashboard").style.display = "none";
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.getElementById("ordersTableBody");
+            if (!tbody) return;
+            const orders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY)) || [];
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="no-orders">No reservations or orders recorded yet.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            orders.forEach((order, index) => {
+                let badgeClass = "status-pending";
+                if(order.status === 'Confirmed') badgeClass = "status-confirmed";
+                if(order.status === 'Rejected') badgeClass = "status-rejected";
+
+                html += `
+                    <tr>
+                        <td>${order.time}</td>
+                        <td><strong>${order.strain}</strong><br><span style="color:var(--accent-cyan);">Total Qty: ${order.quantity}</span><br><span style="color:var(--accent-green);">Total Amount: ${order.price}</span></td>
+                        <td>${order.name}<br><small>${order.email}</small><br><small>${order.phone}</small></td>
+                        <td><small>${order.address}</small><br><small style="color:var(--accent-cyan);">Notes: ${order.notes}</small></td>
+                        <td>
+                            <span class="status-badge ${badgeClass}">${order.status}</span><br>
+                            <small style="color:var(--text-muted);">Feedback: ${order.feedback}</small>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action-confirm" onclick="updateOrderStatus(${index}, 'Confirmed')">Confirm</button>
+                                <button class="btn-action-reject" onclick="updateOrderStatus(${index}, 'Rejected')">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = orders.length > 0 ? html : "";
+        }
+
+        function updateOrderStatus(index, newStatus) {
+            let orders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY)) || [];
+            let defaultFeedback = newStatus === 'Confirmed' ? 
+                "Good news! Your mixed-breed booking has been confirmed. You may now proceed with payment instructions." : 
+                "We regret to inform you that your booking request could not be fulfilled at this time.";
+
+            let customFeedback = prompt(`Provide feedback message for the customer (${newStatus}):`, defaultFeedback);
+            if(customFeedback !== null) {
+                orders[index].status = newStatus;
+                orders[index].feedback = customFeedback;
+                localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+                renderOrdersTable();
+                showNotification(`Order marked as ${newStatus}`);
+            }
+        }
+
+        function openClientStatusModal() {
+            document.getElementById("statusModal").style.display = "flex";
+            document.getElementById("trackResultContainer").innerHTML = "";
+            document.getElementById("trackEmailInput").value = "";
+        }
+
+        function closeClientStatusModal() {
+            document.getElementById("statusModal").style.display = "none";
+        }
+
+        function checkOrderStatus() {
+            const inputEmail = document.getElementById("trackEmailInput").value.trim().toLowerCase();
+            const container = document.getElementById("trackResultContainer");
+            
+            if(!inputEmail) {
+                container.innerHTML = `<p style="color:var(--accent-red); font-size:11px;">Please enter your email address.</p>`;
+                return;
+            }
+
+            let orders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY)) || [];
+            const userOrders = orders.filter(o => o.email === inputEmail);
+
+            if(userOrders.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); font-size:11px;">No orders found associated with this email address.</p>`;
+                return;
+            }
+
+            let html = "";
+            userOrders.forEach(o => {
+                let badgeClass = "status-pending";
+                if(o.status === 'Confirmed') badgeClass = "status-confirmed";
+                if(o.status === 'Rejected') badgeClass = "status-rejected";
+
+                html += `
+                    <div class="status-list-item">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                            <strong style="color:#fff; font-size:12px;">${o.strain}</strong>
+                            <span class="status-badge ${badgeClass}">${o.status}</span>
+                        </div>
+                        <p style="font-size:10px; color:var(--accent-cyan); margin-bottom:2px;">${o.quantity}</p>
+                        <p style="font-size:10px; color:var(--accent-green); margin-bottom:3px;">Total Amount: ${o.price}</p>
+                        <p style="font-size:10px; color:var(--text-muted); margin-bottom:3px;">Booked on: ${o.time}</p>
+                        <p style="font-size:11px; color:var(--text-main);"><strong>Admin Feedback:</strong> ${o.feedback}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
