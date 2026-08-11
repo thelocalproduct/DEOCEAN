@@ -985,7 +985,7 @@
     <section>
         <div class="section-header">
             <span>Acquisition Catalog</span>
-            <h2>Currently Available Koi Morphs (Min. 1 Specimen)</h2>
+            <h2>Currently Available Koi Morphs (Min. 6 Specimen)</h2>
         </div>
         
         <div class="strains-grid" id="strainsGrid">
@@ -1000,10 +1000,10 @@
                     <h3>Kohaku Grand Champion Strain</h3>
                     <p>Classic two-color masterpiece featuring solid white skin with vibrant, sharply defined crimson red markings across a powerful body.</p>
                     <div class="strain-footer">
-                        <span class="price">$1,800.00 / Specimen</span>
+                        <span class="price">₹1,49,400.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Kohaku Grand Champion Strain', 'koi/images/1')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Kohaku Grand Champion Strain', 1800.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Kohaku Grand Champion Strain', 149400.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1019,10 +1019,10 @@
                     <h3>Taisho Sanke Tricolor</h3>
                     <p>Exquisite white base adorned with deep red hi plates and striking jet-black sumi ink spots concentrated strictly above the lateral line.</p>
                     <div class="strain-footer">
-                        <span class="price">$2,100.00 / Specimen</span>
+                        <span class="price">₹1,74,300.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Taisho Sanke Tricolor', 'koi/images/2')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Taisho Sanke Tricolor', 2100.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Taisho Sanke Tricolor', 174300.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1038,10 +1038,10 @@
                     <h3>Showa Sanshoku Metallic</h3>
                     <p>Deep black sumi background wrapping around dynamic red patches, finished with shimmering metallic luster scales.</p>
                     <div class="strain-footer">
-                        <span class="price">$2,450.00 / Specimen</span>
+                        <span class="price">₹2,03,350.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Showa Sanshoku Metallic', 'koi/images/3')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Showa Sanshoku Metallic', 2450.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Showa Sanshoku Metallic', 203350.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1079,9 +1079,9 @@
     <div id="queueModal">
         <div class="modal-box">
             <h3>Mixed Breed Acquisition Queue</h3>
-            <div class="modal-subtitle">Combined minimum order requirement is 1 specimen</div>
+            <div class="modal-subtitle">Combined minimum order requirement is 6 specimens</div>
             <div class="discount-tiers-note">
-                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 3–5 specimens | <strong>10% off</strong> for 6+ specimens!
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–19 specimens | <strong>10% off</strong> for 20+ specimens!
             </div>
             
             <label>Selected Morphs in Your Queue:</label>
@@ -1091,11 +1091,11 @@
                 <div class="form-grid">
                     <div>
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                        <input type="tel" id="buyerPhone" placeholder="+91 98765 43210" required>
                     </div>
                     <div>
                         <label>Full Name</label>
-                        <input type="text" id="buyerName" placeholder="Johnathan Doe" required>
+                        <input type="text" id="buyerName" placeholder="Aarav Sharma" required>
                     </div>
                     <div>
                         <label>Email Address (For Status Tracking)</label>
@@ -1111,15 +1111,15 @@
                     </div>
                     <div>
                         <label>PIN / Postal Code</label>
-                        <input type="text" id="buyerPin" placeholder="90210" required>
+                        <input type="text" id="buyerPin" placeholder="110001" required>
                     </div>
                     <div>
                         <label>State / Region</label>
-                        <input type="text" id="buyerState" placeholder="California" required>
+                        <input type="text" id="buyerState" placeholder="Delhi" required>
                     </div>
                     <div>
                         <label>Country</label>
-                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                        <input type="text" id="buyerCountry" value="India" required>
                     </div>
                     <div class="form-full">
                         <label>Special Delivery Instructions (Optional)</label>
@@ -1132,7 +1132,7 @@
                         <span class="label-total">Estimated Total Amount:</span>
                         <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
                     </div>
-                    <span class="value-total" id="displayTotal">$0.00</span>
+                    <span class="value-total" id="displayTotal">₹0.00</span>
                 </div>
                 <div class="payment-note">
                     Note: Pay only after order confirmation by the administrator.
@@ -1257,7 +1257,7 @@
                     <div class="queue-item-row">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small style="color:var(--accent-green);">$${item.price.toFixed(2)} / specimen</small>
+                            <small style="color:var(--accent-green);">₹${item.price.toLocaleString('en-IN', {minimumFractionDigits: 2})} / specimen</small>
                         </div>
                         <div class="queue-item-controls">
                             <button type="button" onclick="updateQueueQty(${index}, -1)">-</button>
@@ -1278,18 +1278,18 @@
             let discountMultiplier = 0;
             let discountText = "No bulk discount applied";
 
-            if (totalSpecimens >= 6) {
+            if (totalSpecimens >= 20) {
                 discountMultiplier = 0.10;
-                discountText = "Applied: 10% Off (6+ specimens)";
-            } else if (totalSpecimens >= 3 && totalSpecimens <= 5) {
+                discountText = "Applied: 10% Off (20+ specimens)";
+            } else if (totalSpecimens >= 10 && totalSpecimens <= 19) {
                 discountMultiplier = 0.05;
-                discountText = "Applied: 5% Off (3–5 specimens)";
+                discountText = "Applied: 5% Off (10–19 specimens)";
             }
 
             let discountAmount = subtotal * discountMultiplier;
             let finalTotal = subtotal - discountAmount;
 
-            document.getElementById("displayTotal").innerText = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById("displayTotal").innerText = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             document.getElementById("appliedDiscountLabel").innerText = discountText;
             return { totalSpecimens, finalTotal };
         }
@@ -1339,7 +1339,7 @@
             }
 
             let strainSummaryText = selectionQueue.map(item => `${item.name} (x${item.quantity})`).join(", ");
-            let calculatedTotalPrice = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            let calculatedTotalPrice = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             let quantityString = `${totalSpecimens} Total Specimens`;
 
             const name = document.getElementById("buyerName").value;
@@ -1378,6 +1378,7 @@
 
             closeQueueModal();
             document.getElementById("reservationForm").reset();
+            document.getElementById("buyerCountry").value = "India";
             showNotification(`Successfully submitted order request!`);
             renderOrdersTable();
         }

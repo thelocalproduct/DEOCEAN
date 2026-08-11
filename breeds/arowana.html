@@ -589,6 +589,7 @@
         .status-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.4); }
         .status-confirmed { background: rgba(0, 245, 180, 0.2); color: var(--accent-green); border: 1px solid rgba(0, 245, 180, 0.4); }
         .status-rejected { background: rgba(255, 77, 77, 0.2); color: var(--accent-red); border: 1px solid rgba(255, 77, 77, 0.4); }
+        .status-cancelled { background: rgba(156, 194, 229, 0.15); color: var(--text-muted); border: 1px solid rgba(156, 194, 229, 0.3); }
 
         .action-btns {
             display: flex;
@@ -985,7 +986,7 @@
     <section>
         <div class="section-header">
             <span>Acquisition Catalog</span>
-            <h2>Currently Available Arowana Morphs (Min. 2 Specimens)</h2>
+            <h2>Currently Available Arowana Morphs (Min. 1 Specimen)</h2>
         </div>
         
         <div class="strains-grid" id="strainsGrid">
@@ -1000,10 +1001,10 @@
                     <h3>Malaysian Crossback Golden</h3>
                     <p>Exceptional full-crossing gold plating over a deep purple base with immaculate body frame symmetry.</p>
                     <div class="strain-footer">
-                        <span class="price">$1,250.00 / Specimen</span>
+                        <span class="price">₹105,000.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Malaysian Crossback Golden', 'arowana/images/1')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Malaysian Crossback Golden', 1250.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Malaysian Crossback Golden', 105000.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1019,10 +1020,10 @@
                     <h3>Super Red Arowana</h3>
                     <p>Intense blood-red coloration spreading across gill plates and broad finnage with metallic core reflection.</p>
                     <div class="strain-footer">
-                        <span class="price">$1,600.00 / Specimen</span>
+                        <span class="price">₹134,400.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Super Red Arowana', 'arowana/images/2')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Super Red Arowana', 1600.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Super Red Arowana', 134400.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1038,10 +1039,10 @@
                     <h3>Platinum White Arowana</h3>
                     <p>Pristine porcelain-white skin texture with unblemished pearl scaling and majestic swimming posture.</p>
                     <div class="strain-footer">
-                        <span class="price">$2,400.00 / Specimen</span>
+                        <span class="price">₹201,600.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Platinum White Arowana', 'arowana/images/3')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Platinum White Arowana', 2400.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Platinum White Arowana', 201600.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1079,9 +1080,9 @@
     <div id="queueModal">
         <div class="modal-box">
             <h3>Mixed Breed Acquisition Queue</h3>
-            <div class="modal-subtitle">Combined minimum order requirement is 2 specimens</div>
+            <div class="modal-subtitle">Combined minimum order requirement is 1 specimen</div>
             <div class="discount-tiers-note">
-                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 4–7 specimens | <strong>10% off</strong> for 8+ specimens!
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–19 specimens | <strong>10% off</strong> for 20+ specimens!
             </div>
             
             <label>Selected Morphs in Your Queue:</label>
@@ -1091,11 +1092,11 @@
                 <div class="form-grid">
                     <div>
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                        <input type="tel" id="buyerPhone" placeholder="+91 98765 43210" required>
                     </div>
                     <div>
                         <label>Full Name</label>
-                        <input type="text" id="buyerName" placeholder="Johnathan Doe" required>
+                        <input type="text" id="buyerName" placeholder="Aarav Sharma" required>
                     </div>
                     <div>
                         <label>Email Address (For Status Tracking)</label>
@@ -1103,23 +1104,23 @@
                     </div>
                     <div class="form-full">
                         <label>Street Address / Location</label>
-                        <input type="text" id="buyerAddress" placeholder="123 Aquatic Boulevard, Suite 4B" required>
+                        <input type="text" id="buyerAddress" placeholder="123 Marine Drive, Apartment 4B" required>
                     </div>
                     <div>
                         <label>Landmark</label>
-                        <input type="text" id="buyerLandmark" placeholder="Near Marine Science Tower">
+                        <input type="text" id="buyerLandmark" placeholder="Near Central Aquarium Tower">
                     </div>
                     <div>
                         <label>PIN / Postal Code</label>
-                        <input type="text" id="buyerPin" placeholder="90210" required>
+                        <input type="text" id="buyerPin" placeholder="400001" required>
                     </div>
                     <div>
                         <label>State / Region</label>
-                        <input type="text" id="buyerState" placeholder="California" required>
+                        <input type="text" id="buyerState" placeholder="Maharashtra" required>
                     </div>
                     <div>
                         <label>Country</label>
-                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                        <input type="text" id="buyerCountry" value="India" required>
                     </div>
                     <div class="form-full">
                         <label>Special Delivery Instructions (Optional)</label>
@@ -1132,7 +1133,7 @@
                         <span class="label-total">Estimated Total Amount:</span>
                         <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
                     </div>
-                    <span class="value-total" id="displayTotal">$0.00</span>
+                    <span class="value-total" id="displayTotal">₹0.00</span>
                 </div>
                 <div class="payment-note">
                     Note: Pay only after order confirmation by the administrator.
@@ -1201,9 +1202,9 @@
         function addToQueue(strainName, unitPrice) {
             let existing = selectionQueue.find(item => item.name === strainName);
             if (existing) {
-                existing.quantity += 2;
+                existing.quantity += 1;
             } else {
-                selectionQueue.push({ name: strainName, price: unitPrice, quantity: 2 });
+                selectionQueue.push({ name: strainName, price: unitPrice, quantity: 1 });
             }
             saveQueueToStorage();
             updateQueueBadge();
@@ -1227,8 +1228,8 @@
 
         function updateQueueQty(index, change) {
             selectionQueue[index].quantity += change;
-            if (selectionQueue[index].quantity < 2) {
-                selectionQueue[index].quantity = 2;
+            if (selectionQueue[index].quantity < 1) {
+                selectionQueue[index].quantity = 1;
             }
             saveQueueToStorage();
             renderQueueItems();
@@ -1257,7 +1258,7 @@
                     <div class="queue-item-row">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small style="color:var(--accent-green);">$${item.price.toFixed(2)} / specimen</small>
+                            <small style="color:var(--accent-green);">₹${item.price.toLocaleString('en-IN', {minimumFractionDigits: 2})} / specimen</small>
                         </div>
                         <div class="queue-item-controls">
                             <button type="button" onclick="updateQueueQty(${index}, -1)">-</button>
@@ -1278,18 +1279,18 @@
             let discountMultiplier = 0;
             let discountText = "No bulk discount applied";
 
-            if (totalSpecimens >= 8) {
+            if (totalSpecimens >= 20) {
                 discountMultiplier = 0.10;
-                discountText = "Applied: 10% Off (8+ specimens)";
-            } else if (totalSpecimens >= 4 && totalSpecimens <= 7) {
+                discountText = "Applied: 10% Off (20+ specimens)";
+            } else if (totalSpecimens >= 10 && totalSpecimens <= 19) {
                 discountMultiplier = 0.05;
-                discountText = "Applied: 5% Off (4–7 specimens)";
+                discountText = "Applied: 5% Off (10–19 specimens)";
             }
 
             let discountAmount = subtotal * discountMultiplier;
             let finalTotal = subtotal - discountAmount;
 
-            document.getElementById("displayTotal").innerText = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById("displayTotal").innerText = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             document.getElementById("appliedDiscountLabel").innerText = discountText;
             return { totalSpecimens, finalTotal };
         }
@@ -1333,13 +1334,13 @@
             }
 
             let { totalSpecimens, finalTotal } = calculateQueueTotal();
-            if (totalSpecimens < 2) {
-                alert("Error: Minimum combined order requirement is 2 specimens.");
+            if (totalSpecimens < 1) {
+                alert("Error: Minimum combined order requirement is 1 specimen.");
                 return;
             }
 
             let strainSummaryText = selectionQueue.map(item => `${item.name} (x${item.quantity})`).join(", ");
-            let calculatedTotalPrice = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            let calculatedTotalPrice = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             let quantityString = `${totalSpecimens} Total Specimens`;
 
             const name = document.getElementById("buyerName").value;
@@ -1414,6 +1415,7 @@
                 let badgeClass = "status-pending";
                 if(order.status === 'Confirmed') badgeClass = "status-confirmed";
                 if(order.status === 'Rejected') badgeClass = "status-rejected";
+                if(order.status === 'Cancelled') badgeClass = "status-cancelled";
 
                 html += `
                     <tr>
@@ -1485,6 +1487,12 @@
                 let badgeClass = "status-pending";
                 if(o.status === 'Confirmed') badgeClass = "status-confirmed";
                 if(o.status === 'Rejected') badgeClass = "status-rejected";
+                if(o.status === 'Cancelled') badgeClass = "status-cancelled";
+
+                let cancelBtnHtml = "";
+                if(o.status === 'Pending') {
+                    cancelBtnHtml = `<button type="button" onclick="clientCancelOrder('${o.id}')" style="background: rgba(255, 77, 77, 0.15); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; margin-top: 8px;">Cancel Order</button>`;
+                }
 
                 html += `
                     <div class="status-list-item">
@@ -1495,10 +1503,28 @@
                         <p style="font-size:11px; color:var(--accent-green); margin-bottom:4px;">Total Amount: ${o.price}</p>
                         <p style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Ordered on: ${o.time}</p>
                         <p style="font-size:12px; color:var(--text-main);"><strong>Admin Feedback:</strong> ${o.feedback}</p>
+                        ${cancelBtnHtml}
                     </div>
                 `;
             });
             container.innerHTML = html;
+        }
+
+        function clientCancelOrder(orderId) {
+            if(!confirm("Are you sure you want to cancel this order?")) return;
+
+            let orders = JSON.parse(localStorage.getItem("deocean_orders")) || [];
+            let order = orders.find(o => o.id === orderId);
+
+            if (order && order.status === 'Pending') {
+                order.status = 'Cancelled';
+                order.feedback = 'Order cancelled by the customer before admin confirmation.';
+                localStorage.setItem("deocean_orders", JSON.stringify(orders));
+
+                checkOrderStatus();
+                renderOrdersTable();
+                showNotification("Order has been successfully cancelled.");
+            }
         }
     </script>
 

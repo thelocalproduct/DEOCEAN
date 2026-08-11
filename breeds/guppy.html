@@ -944,7 +944,6 @@
                     <li><a href="discus.html">Discus</a></li>
                     <li><a href="arowana.html">Arowana</a></li>
                     <li><a href="koi.html">Koi</a></li>
-                    <li><a href="crustacean.html">Crustacean</a></li>
                 </ul>
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
@@ -986,7 +985,7 @@
     <section>
         <div class="section-header">
             <span>Acquisition Catalog</span>
-            <h2>Currently Available Guppy Morphs (Min. 1 Specimen)</h2>
+            <h2>Currently Available Guppy Morphs (Min. 6 Specimens)</h2>
         </div>
         
         <div class="strains-grid" id="strainsGrid">
@@ -1001,10 +1000,10 @@
                     <h3>Full Black Moscow Guppy</h3>
                     <p>Velvety obsidian-black pigmentation covering the entire body and fins, bred for high color density and stable velvet reflection.</p>
                     <div class="strain-footer">
-                        <span class="price">$85.00 / Specimen</span>
+                        <span class="price">₹7,000.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Full Black Moscow Guppy', 'guppy/images/1')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Full Black Moscow Guppy', 85.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Full Black Moscow Guppy', 7000.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1020,10 +1019,10 @@
                     <h3>Neon Blue Tuxedo Guppy</h3>
                     <p>Striking contrast featuring dark metallic foreparts transitioning into electric neon-blue caudal and dorsal fins.</p>
                     <div class="strain-footer">
-                        <span class="price">$75.00 / Specimen</span>
+                        <span class="price">₹6,000.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Neon Blue Tuxedo Guppy', 'guppy/images/2')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Neon Blue Tuxedo Guppy', 75.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Neon Blue Tuxedo Guppy', 6000.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1039,10 +1038,10 @@
                     <h3>Red Mosaic Big Tail Guppy</h3>
                     <p>Broad delta tail adorned with intricate web-like mosaic patterns in vibrant crimson-red against crystalline clear borders.</p>
                     <div class="strain-footer">
-                        <span class="price">$90.00 / Specimen</span>
+                        <span class="price">₹7,500.00 / Specimen</span>
                         <div class="card-buttons">
                             <button class="gallery-btn" onclick="openGallery('Red Mosaic Big Tail Guppy', 'guppy/images/3')">Gallery (5)</button>
-                            <button class="reserve-btn" onclick="addToQueue('Red Mosaic Big Tail Guppy', 90.00)">+ Add to Queue</button>
+                            <button class="reserve-btn" onclick="addToQueue('Red Mosaic Big Tail Guppy', 7500.00)">+ Add to Queue</button>
                         </div>
                     </div>
                 </div>
@@ -1080,9 +1079,9 @@
     <div id="queueModal">
         <div class="modal-box">
             <h3>Mixed Breed Acquisition Queue</h3>
-            <div class="modal-subtitle">Combined minimum order requirement is 1 specimen</div>
+            <div class="modal-subtitle">Combined minimum order requirement is 6 specimens</div>
             <div class="discount-tiers-note">
-                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 3–5 specimens | <strong>10% off</strong> for 6+ specimens!
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–19 specimens | <strong>10% off</strong> for 20+ specimens!
             </div>
             
             <label>Selected Morphs in Your Queue:</label>
@@ -1092,7 +1091,7 @@
                 <div class="form-grid">
                     <div>
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                        <input type="tel" id="buyerPhone" placeholder="+91 98765 43210" required>
                     </div>
                     <div>
                         <label>Full Name</label>
@@ -1112,15 +1111,15 @@
                     </div>
                     <div>
                         <label>PIN / Postal Code</label>
-                        <input type="text" id="buyerPin" placeholder="90210" required>
+                        <input type="text" id="buyerPin" placeholder="400001" required>
                     </div>
                     <div>
                         <label>State / Region</label>
-                        <input type="text" id="buyerState" placeholder="California" required>
+                        <input type="text" id="buyerState" placeholder="Maharashtra" required>
                     </div>
                     <div>
                         <label>Country</label>
-                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                        <input type="text" id="buyerCountry" value="India" placeholder="India" required>
                     </div>
                     <div class="form-full">
                         <label>Special Delivery Instructions (Optional)</label>
@@ -1133,7 +1132,7 @@
                         <span class="label-total">Estimated Total Amount:</span>
                         <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
                     </div>
-                    <span class="value-total" id="displayTotal">$0.00</span>
+                    <span class="value-total" id="displayTotal">₹0.00</span>
                 </div>
                 <div class="payment-note">
                     Note: Pay only after order confirmation by the administrator.
@@ -1258,7 +1257,7 @@
                     <div class="queue-item-row">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small style="color:var(--accent-green);">$${item.price.toFixed(2)} / specimen</small>
+                            <small style="color:var(--accent-green);">₹${item.price.toLocaleString('en-IN', {minimumFractionDigits: 2})} / specimen</small>
                         </div>
                         <div class="queue-item-controls">
                             <button type="button" onclick="updateQueueQty(${index}, -1)">-</button>
@@ -1279,18 +1278,18 @@
             let discountMultiplier = 0;
             let discountText = "No bulk discount applied";
 
-            if (totalSpecimens >= 6) {
+            if (totalSpecimens >= 20) {
                 discountMultiplier = 0.10;
-                discountText = "Applied: 10% Off (6+ specimens)";
-            } else if (totalSpecimens >= 3 && totalSpecimens <= 5) {
+                discountText = "Applied: 10% Off (20+ specimens)";
+            } else if (totalSpecimens >= 10 && totalSpecimens <= 19) {
                 discountMultiplier = 0.05;
-                discountText = "Applied: 5% Off (3–5 specimens)";
+                discountText = "Applied: 5% Off (10–19 specimens)";
             }
 
             let discountAmount = subtotal * discountMultiplier;
             let finalTotal = subtotal - discountAmount;
 
-            document.getElementById("displayTotal").innerText = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById("displayTotal").innerText = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             document.getElementById("appliedDiscountLabel").innerText = discountText;
             return { totalSpecimens, finalTotal };
         }
@@ -1329,18 +1328,18 @@
             event.preventDefault();
             
             if (selectionQueue.length === 0) {
-                alert("Your queue is empty. Please add at least one morph before submitting.");
+                alert("Your queue is empty. Please add at least 6 specimens before submitting.");
                 return;
             }
 
             let { totalSpecimens, finalTotal } = calculateQueueTotal();
-            if (totalSpecimens < 1) {
-                alert("Error: Minimum combined order requirement is 1 specimen.");
+            if (totalSpecimens < 6) {
+                alert("Error: Minimum combined order requirement is 6 specimens.");
                 return;
             }
 
             let strainSummaryText = selectionQueue.map(item => `${item.name} (x${item.quantity})`).join(", ");
-            let calculatedTotalPrice = `$${finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            let calculatedTotalPrice = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
             let quantityString = `${totalSpecimens} Total Specimens`;
 
             const name = document.getElementById("buyerName").value;
