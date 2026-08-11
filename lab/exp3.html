@@ -927,8 +927,8 @@
                     <h3>Nebula Veil Guppy</h3>
                     <p>Next-gen iridescent strain featuring deep cosmic blue hues and luminescent tail extensions.</p>
                     <div class="strain-footer">
-                        <span class="price">$85.00 / Pair</span>
-                        <button class="add-queue-btn" onclick="addToQueue('Nebula Veil Guppy (NX-01)', 85.00)">+ Add to Queue</button>
+                        <span class="price">₹2000.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Nebula Veil Guppy (NX-01)', 2000.00)">+ Add to Queue</button>
                     </div>
                 </div>
             </div>
@@ -942,8 +942,8 @@
                     <h3>Abyssal Crown Betta</h3>
                     <p>Experimental dark-scale morph with glowing neon fin borders and aggressive symmetry.</p>
                     <div class="strain-footer">
-                        <span class="price">$120.00 / Pair</span>
-                        <button class="add-queue-btn" onclick="addToQueue('Abyssal Crown Betta (NX-02)', 120.00)">+ Add to Queue</button>
+                        <span class="price">₹2000.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Abyssal Crown Betta (NX-02)', 2000.00)">+ Add to Queue</button>
                     </div>
                 </div>
             </div>
@@ -957,8 +957,8 @@
                     <h3>Platinum Titan Discus</h3>
                     <p>A pristine mirror-finish morph bred for extreme body width and ultra-smooth coloration.</p>
                     <div class="strain-footer">
-                        <span class="price">$250.00 / Pair</span>
-                        <button class="add-queue-btn" onclick="addToQueue('Platinum Titan Discus (NX-03)', 250.00)">+ Add to Queue</button>
+                        <span class="price">₹2000.00 / Pair</span>
+                        <button class="add-queue-btn" onclick="addToQueue('Platinum Titan Discus (NX-03)', 2000.00)">+ Add to Queue</button>
                     </div>
                 </div>
             </div>
@@ -979,7 +979,7 @@
             <h3>Mixed Breed Acquisition Queue</h3>
             <div class="modal-subtitle">Combined minimum order requirement is 6 pairs</div>
             <div class="discount-tiers-note">
-                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–14 pairs | <strong>10% off</strong> for 15+ pairs!
+                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–19 pairs | <strong>10% off</strong> for 20+ pairs!
             </div>
             
             <label>Selected Breeds in Your Queue:</label>
@@ -991,7 +991,7 @@
                 <div class="form-grid">
                     <div>
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" id="buyerPhone" placeholder="+1 (555) 019-2834" required>
+                        <input type="tel" id="buyerPhone" placeholder="+91 0000000000" required>
                     </div>
                     <div>
                         <label>Full Name</label>
@@ -1011,15 +1011,15 @@
                     </div>
                     <div>
                         <label>PIN / Postal Code</label>
-                        <input type="text" id="buyerPin" placeholder="90210" required>
+                        <input type="text" id="buyerPin" placeholder="400001" required>
                     </div>
                     <div>
                         <label>State / Region</label>
-                        <input type="text" id="buyerState" placeholder="California" required>
+                        <input type="text" id="buyerState" placeholder="Maharashtra" required>
                     </div>
                     <div>
                         <label>Country</label>
-                        <input type="text" id="buyerCountry" placeholder="United States" required>
+                        <input type="text" id="buyerCountry" placeholder="India" required>
                     </div>
                     <div class="form-full">
                         <label>Special Delivery Instructions (Optional)</label>
@@ -1033,7 +1033,7 @@
                         <span class="label-total">Estimated Total Amount:</span>
                         <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
                     </div>
-                    <span class="value-total" id="displayTotal">$0.00</span>
+                    <span class="value-total" id="displayTotal">₹0.00</span>
                 </div>
                 <div class="payment-note">
                     Note: Pay only after order confirmation by the administrator.
@@ -1110,9 +1110,9 @@
         function addToQueue(strainName, unitPrice) {
             let existing = selectionQueue.find(item => item.name === strainName);
             if (existing) {
-                existing.quantity += 2; // Add default 2 pairs increments when clicking add again
+                existing.quantity += 1; // Add default 1 pair increments when clicking add again
             } else {
-                selectionQueue.push({ name: strainName, price: unitPrice, quantity: 2 });
+                selectionQueue.push({ name: strainName, price: unitPrice, quantity: 1 });
             }
             updateQueueBadge();
             showNotification(`Added ${strainName} to your queue!`);
@@ -1150,11 +1150,11 @@
                     <div class="queue-item-row">
                         <div>
                             <strong style="color:#fff;">${item.name}</strong><br>
-                            <span style="color:var(--accent-green);">$${item.price.toFixed(2)} / pair</span>
+                            <span style="color:var(--accent-green);">₹${item.price.toFixed(1)} / pair</span>
                         </div>
                         <div class="queue-item-controls">
                             <label style="font-size:10px; margin:0;">Pairs:</label>
-                            <input type="number" min="2" step="2" value="${item.quantity}" onchange="updateQueueQty(${index}, this.value)">
+                            <input type="number" min="1" step="1" value="${item.quantity}" onchange="updateQueueQty(${index}, this.value)">
                             <button type="button" class="btn-remove-item" onclick="removeFromQueue(${index})">✕</button>
                         </div>
                     </div>
@@ -1165,7 +1165,7 @@
 
         function updateQueueQty(index, val) {
             let parsed = parseInt(val, 10);
-            if (isNaN(parsed) || parsed < 2) parsed = 2;
+            if (isNaN(parsed) || parsed < 1) parsed = 1;
             selectionQueue[index].quantity = parsed;
             updateQueueBadge();
             calculateQueueTotal();
@@ -1193,18 +1193,18 @@
             let discountMultiplier = 0;
             let discountText = "No bulk discount applied";
 
-            if (totalPairs >= 15) {
+            if (totalPairs >= 20) {
                 discountMultiplier = 0.10;
-                discountText = "Applied: 10% Off (15+ pairs)";
-            } else if (totalPairs >= 10 && totalPairs <= 14) {
+                discountText = "Applied: 10% Off (20+ pairs)";
+            } else if (totalPairs >= 10 && totalPairs <= 19) {
                 discountMultiplier = 0.05;
-                discountText = "Applied: 5% Off (10–14 pairs)";
+                discountText = "Applied: 5% Off (10–19 pairs)";
             }
 
             let discountAmount = subtotal * discountMultiplier;
             let finalTotal = subtotal - discountAmount;
 
-            document.getElementById("displayTotal").innerText = `$${finalTotal.toFixed(2)}`;
+            document.getElementById("displayTotal").innerText = `₹${finalTotal.toFixed(1)}`;
             document.getElementById("appliedDiscountLabel").innerText = discountText;
             return { totalPairs, finalTotal };
         }
@@ -1219,7 +1219,7 @@
             }
 
             let summaryStrainString = selectionQueue.map(i => `${i.quantity}x ${i.name}`).join(", ");
-            let calculatedTotalPrice = `$${calculation.finalTotal.toFixed(2)}`;
+            let calculatedTotalPrice = `₹${calculation.finalTotal.toFixed(2)}`;
 
             const name = document.getElementById("buyerName").value;
             const email = document.getElementById("buyerEmail").value.trim().toLowerCase();
