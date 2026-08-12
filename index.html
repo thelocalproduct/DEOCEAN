@@ -491,6 +491,26 @@
             font-size: clamp(14px, 1.8vw, 22px);
         }
 
+        .admin-header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-clear-orders {
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            min-height: 36px;
+        }
+
+        .btn-clear-orders:hover {
+            background: rgba(255, 77, 77, 0.3);
+        }
+
         .close-admin {
             background: none;
             border: 1px solid var(--border-glass);
@@ -956,6 +976,29 @@
                 padding: 60px 4%;
             }
         }
+
+        /* Mobile Admin Trigger for Touch/Mobile Devices */
+        .mobile-admin-trigger-container {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 245, 180, 0.05);
+            border-top: 1px solid var(--border-glass);
+        }
+        .mobile-admin-trigger-btn {
+            background: none;
+            border: 1px dashed var(--accent-green);
+            color: var(--accent-green);
+            font-size: 10px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .mobile-admin-trigger-container {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -980,7 +1023,7 @@
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal(); closeMobileMenu();">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
             <li><button class="client-status-btn" onclick="openClientStatusModal(); closeMobileMenu();">📦 Track Status</button></li>
-            <li><button class="admin-nav-btn" onclick="openAdminPanel(); closeMobileMenu();">⚙️ Admin Panel</button></li>
+            <li id="adminNavLi" style="display: none;"><button class="admin-nav-btn" onclick="openAdminPanel(); closeMobileMenu();">⚙️ Admin Panel</button></li>
         </ul>
     </header>
 
@@ -1078,6 +1121,9 @@
         <div class="footer-logo">DE'OCEAN</div>
         <p>Private Aquatic Atelier &bull; Global Inquiries: acquisition@deoceanaquatics.com</p>
         <p style="margin-top: 15px; opacity: 0.5;">&copy; 2026 DE'OCEAN. All rights reserved.</p>
+        <div class="mobile-admin-trigger-container">
+            <button class="mobile-admin-trigger-btn" onclick="promptMobileAdminLogin()">⚙️ Admin Access</button>
+        </div>
     </footer>
 
     <!-- Queue & Checkout Modal -->
@@ -1170,7 +1216,10 @@
     <div id="adminDashboard">
         <div class="admin-header">
             <h2>🔒 Admin Order Chart & Feedback Control</h2>
-            <button class="close-admin" onclick="closeAdminPanel()">Close Panel</button>
+            <div class="admin-header-actions">
+                <button class="btn-clear-orders" onclick="clearAllOrders()">Clear All Orders</button>
+                <button class="close-admin" onclick="closeAdminPanel()">Close Panel</button>
+            </div>
         </div>
         <div style="overflow-x: auto;">
             <table class="orders-table">
@@ -1198,6 +1247,8 @@
     <script>
         const ORDERS_STORAGE_KEY = "deocean_orders_inr";
         const QUEUE_STORAGE_KEY = "deocean_queue_inr"; 
+        const ADMIN_PASSWORD = "Deocean$126542";
+        let isAdminLoggedIn = false;
         
         // Strain catalog data mapped with updated INR prices
         const strainCatalog = [
@@ -1220,7 +1271,35 @@
                     renderOrdersTable();
                 }
             });
+
+            // Keyboard shortcut listener: Ctrl + Shift + A
+            document.addEventListener("keydown", function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    verifyAdminAccess();
+                }
+            });
         });
+
+        function verifyAdminAccess() {
+            if (isAdminLoggedIn) {
+                openAdminPanel();
+                return;
+            }
+            let pwd = prompt("Enter Admin Password:");
+            if (pwd === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                document.getElementById("adminNavLi").style.display = "block";
+                openAdminPanel();
+                showNotification("Admin access granted successfully.");
+            } else if (pwd !== null) {
+                showNotification("Incorrect password. Access denied.");
+            }
+        }
+
+        function promptMobileAdminLogin() {
+            verifyAdminAccess();
+        }
 
         function toggleMobileMenu() {
             const nav = document.getElementById("navLinksContainer");
@@ -1267,6 +1346,22 @@
             let totalPairs = selectionQueue.reduce((sum, item) => sum + item.quantity, 0);
             const badge = document.getElementById("queueCountBadge");
             if (badge) badge.innerText = totalPairs;
+        }
+
+        function addToQueue(strainName, price) {
+            loadQueueFromStorage();
+            let existingItem = selectionQueue.find(item => item.name === strainName);
+            if (existingItem) {
+                existingItem.quantity += 2;
+            } else {
+                selectionQueue.push({
+                    name: strainName,
+                    price: price,
+                    quantity: 2
+                });
+            }
+            saveQueueToStorage();
+            showNotification(`Added ${strainName} (2 pairs) to your queue.`);
         }
 
         function openQueueModal() {
@@ -1416,7 +1511,11 @@
         }
 
         function openAdminPanel() {
-            renderOrdersTable();
+            if (!isAdminLoggedIn) {
+                verifyAdminAccess();
+                return;
+            }
+            renderOrdersTable(); // Forces fresh data fetch on open
             document.getElementById("adminDashboard").style.display = "block";
         }
 
@@ -1459,7 +1558,7 @@
                     </tr>
                 `;
             });
-            tbody.innerHTML = orders.length > 0 ? html : "";
+            tbody.innerHTML = html;
         }
 
         function updateOrderStatus(index, newStatus) {
@@ -1475,6 +1574,14 @@
                 localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
                 renderOrdersTable();
                 showNotification(`Order marked as ${newStatus}`);
+            }
+        }
+
+        function clearAllOrders() {
+            if (confirm("Are you sure you want to clear all orders? This action cannot be undone.")) {
+                localStorage.removeItem(ORDERS_STORAGE_KEY);
+                renderOrdersTable();
+                showNotification("All orders have been cleared.");
             }
         }
 

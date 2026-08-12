@@ -846,14 +846,40 @@
         @media (max-width: 768px) {
             header {
                 padding: 10px 3%;
+                flex-wrap: wrap;
+            }
+            .logo {
+                font-size: 16px;
+                letter-spacing: 1px;
             }
             .nav-links {
-                gap: 5px;
+                gap: 4px;
+                width: 100%;
+                justify-content: space-between;
+                overflow-x: auto;
+                padding-bottom: 4px;
             }
             .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
                 font-size: 8px;
                 letter-spacing: 0.1px;
-                padding: 3px 6px;
+                padding: 3px 5px;
+            }
+            .page-hero {
+                margin-top: 140px;
+                padding: 20px 10px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-full {
+                grid-column: span 1;
+            }
+            .modal-box {
+                padding: 15px;
+                max-height: 95vh;
+            }
+            #adminDashboard {
+                padding: 20px 2%;
             }
         }
     </style>
@@ -884,7 +910,7 @@
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
             <li><button class="client-status-btn" onclick="openClientStatusModal()">📦 Track</button></li>
-            <li><button class="admin-nav-btn" onclick="openAdminPanel()">⚙️ Admin</button></li>
+            <li><button class="admin-nav-btn" id="adminNavBtn" style="display: none;" onclick="openAdminPanel()">⚙️ Admin</button></li>
         </ul>
     </header>
 
@@ -1095,6 +1121,34 @@
         document.addEventListener("DOMContentLoaded", function() {
             renderOrdersTable();
             updateQueueBadge();
+        });
+
+        // Shortcut listener for Ctrl + Shift + A to toggle admin panel view
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'A' || event.key === 'a')) {
+                event.preventDefault();
+                let adminBtn = document.getElementById("adminNavBtn");
+                let adminDashboard = document.getElementById("adminDashboard");
+                
+                if (adminBtn.style.display === "none" || adminBtn.style.display === "") {
+                    let enteredPass = prompt("Enter Admin Password:");
+                    if (enteredPass === "Deocean$126542") {
+                        adminBtn.style.display = "inline-block";
+                        openAdminPanel();
+                        showNotification("Admin access granted.");
+                    } else if (enteredPass !== null) {
+                        showNotification("Incorrect password.");
+                    }
+                } else {
+                    if (adminDashboard.style.display === "block") {
+                        closeAdminPanel();
+                        adminBtn.style.display = "none";
+                        showNotification("Admin panel hidden.");
+                    } else {
+                        openAdminPanel();
+                    }
+                }
+            }
         });
 
         // Background Smooth Fade In / Fade Out Script
@@ -1369,7 +1423,7 @@
                             <strong style="color:#fff; font-size:13px;">${o.strain}</strong>
                             <span class="status-badge ${badgeClass}">${o.status}</span>
                         </div>
-                        <p style="font-size:11px; color:var(--accent-cyan); margin-bottom:2px;">${o.quantity}</p>
+                        <p style="font-size:11px; color:var(--accent-cyan); margin-button:2px;">${o.quantity}</p>
                         <p style="font-size:11px; color:var(--accent-green); margin-bottom:4px;">Total Amount: ${o.price}</p>
                         <p style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Booked on: ${o.time}</p>
                         <p style="font-size:12px; color:var(--text-main);"><strong>Admin Feedback:</strong> ${o.feedback}</p>
@@ -1382,3 +1436,4 @@
 
 </body>
 </html>
+```[cite: 4]

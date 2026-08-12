@@ -71,7 +71,8 @@
             display: flex;
             gap: clamp(8px, 1.8vw, 25px);
             align-items: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
@@ -99,6 +100,7 @@
             border: 1px solid rgba(0, 245, 180, 0.3);
             padding: 4px 10px;
             border-radius: 4px;
+            display: none; /* Hidden by default until unlocked via Ctrl+Shift+A */
         }
 
         .client-status-btn {
@@ -369,6 +371,7 @@
             padding-top: 12px;
             margin-top: auto;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .price {
@@ -477,6 +480,7 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .thumb-img {
@@ -522,6 +526,8 @@
             border-bottom: 1px solid var(--border-glass);
             padding-bottom: 20px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .admin-header h2 {
@@ -544,13 +550,18 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .orders-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            background: var(--bg-card);
+        }
+
         .orders-table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
+            min-width: 700px;
         }
 
         .orders-table th, .orders-table td {
@@ -743,6 +754,7 @@
             padding: 8px 12px;
             border-bottom: 1px solid var(--border-glass);
             font-size: 12px;
+            gap: 10px;
         }
 
         .queue-item-row:last-child {
@@ -819,6 +831,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .total-summary-box .label-total {
@@ -896,18 +910,29 @@
             letter-spacing: 0.5px;
         }
 
-        /* Mobile Responsive Adjustments */
+        /* Mobile Responsive Optimizations */
         @media (max-width: 768px) {
             header {
                 padding: 10px 3%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .logo {
+                text-align: center;
             }
             .nav-links {
-                gap: 5px;
+                justify-content: center;
+                gap: 6px;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 4px;
             }
-            .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
-                font-size: 8px;
-                letter-spacing: 0.1px;
-                padding: 3px 6px;
+            .nav-links > li {
+                flex-shrink: 0;
+            }
+            .subpage-hero {
+                padding-top: 180px;
             }
             .experiment-grid {
                 grid-template-columns: 1fr;
@@ -925,6 +950,18 @@
             }
             .form-full {
                 grid-column: span 1;
+            }
+            .modal-box, .gallery-box, .status-result-box {
+                max-width: 92%;
+                padding: 18px;
+                margin: 0 auto;
+            }
+            #adminDashboard {
+                padding: 20px 2%;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -949,7 +986,7 @@
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
             <li><button class="client-status-btn" onclick="openClientStatusModal()">📦 Track</button></li>
-            <li><button class="admin-nav-btn" onclick="openAdminPanel()">⚙️ Admin</button></li>
+            <li><button class="admin-nav-btn" id="adminNavBtn" onclick="openAdminPanel()">⚙️ Admin</button></li>
         </ul>
     </header>
 
@@ -1096,7 +1133,7 @@
                     </div>
                     <div>
                         <label>Full Name</label>
-                        <input type="text" id="buyerName" placeholder="Aarav Sharma" required>
+                        <input type="text" id="buyerName" value="Aarav Sharma" required>
                     </div>
                     <div>
                         <label>Email Address (For Status Tracking)</label>
@@ -1166,7 +1203,7 @@
             <h2>🔒 Admin Order Chart & Feedback Control</h2>
             <button class="close-admin" onclick="closeAdminPanel()">Close Panel</button>
         </div>
-        <div style="overflow-x: auto;">
+        <div class="orders-table-wrapper">
             <table class="orders-table">
                 <thead>
                     <tr>
@@ -1193,6 +1230,27 @@
         document.addEventListener("DOMContentLoaded", function() {
             renderOrdersTable();
             updateQueueBadge();
+
+            // Check if admin was previously unlocked in session storage
+            if (sessionStorage.getItem("deocean_admin_unlocked") === "true") {
+                document.getElementById("adminNavBtn").style.display = "inline-block";
+            }
+
+            // Shortcut listener for Ctrl+Shift+A
+            document.addEventListener("keydown", function(e) {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    let pass = prompt("Enter admin password[cite: 1]:");
+                    if (pass === "Deocean$126542") { // Password from[cite: 1]
+                        sessionStorage.setItem("deocean_admin_unlocked", "true");
+                        document.getElementById("adminNavBtn").style.display = "inline-block";
+                        showNotification("Admin panel unlocked successfully!");
+                        openAdminPanel();
+                    } else if (pass !== null) {
+                        alert("Incorrect password.");
+                    }
+                }
+            });
         });
 
         function saveQueueToStorage() {

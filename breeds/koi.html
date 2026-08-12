@@ -99,6 +99,7 @@
             border: 1px solid rgba(0, 245, 180, 0.3);
             padding: 4px 10px;
             border-radius: 4px;
+            display: none; /* Hidden by default until Ctrl+Shift+A login */
         }
 
         .client-status-btn {
@@ -899,14 +900,22 @@
         @media (max-width: 768px) {
             header {
                 padding: 10px 3%;
+                flex-wrap: wrap;
             }
             .nav-links {
-                gap: 5px;
+                gap: 4px;
+                width: 100%;
+                justify-content: space-between;
+                overflow-x: auto;
+                padding-bottom: 4px;
             }
             .nav-links > li > a, .dropdown-toggle, .admin-nav-btn, .client-status-btn, .queue-nav-btn {
                 font-size: 8px;
-                letter-spacing: 0.1px;
-                padding: 3px 6px;
+                letter-spacing: 0px;
+                padding: 3px 5px;
+            }
+            .subpage-hero {
+                padding-top: 110px;
             }
             .experiment-grid {
                 grid-template-columns: 1fr;
@@ -924,6 +933,21 @@
             }
             .form-full {
                 grid-column: span 1;
+            }
+            .orders-table th, .orders-table td {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+            .modal-box {
+                padding: 15px;
+                max-width: 95vw;
+            }
+            .gallery-box {
+                padding: 15px;
+                max-width: 95vw;
+            }
+            .gallery-viewport {
+                height: 240px;
             }
         }
     </style>
@@ -948,7 +972,7 @@
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
             <li><button class="client-status-btn" onclick="openClientStatusModal()">📦 Track</button></li>
-            <li><button class="admin-nav-btn" onclick="openAdminPanel()">⚙️ Admin</button></li>
+            <li><button class="admin-nav-btn" id="adminNavBtn" onclick="openAdminPanel()">⚙️ Admin</button></li>
         </ul>
     </header>
 
@@ -1192,6 +1216,21 @@
         document.addEventListener("DOMContentLoaded", function() {
             renderOrdersTable();
             updateQueueBadge();
+
+            // Shortcut listener for Ctrl+Shift+A to reveal admin panel with password prompt
+            document.addEventListener("keydown", function(e) {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    let pwd = prompt("Enter Admin Password:");
+                    if (pwd === "Deocean$126542") {
+                        document.getElementById("adminNavBtn").style.display = "inline-block";
+                        openAdminPanel();
+                        showNotification("Admin access granted.");
+                    } else if (pwd !== null) {
+                        alert("Incorrect password!");
+                    }
+                }
+            });
         });
 
         function saveQueueToStorage() {

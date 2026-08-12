@@ -99,6 +99,7 @@
             border: 1px solid rgba(0, 245, 180, 0.3);
             padding: 4px 10px;
             border-radius: 4px;
+            display: none; /* Hidden by default, toggled via shortcut */
         }
 
         .client-status-btn {
@@ -716,16 +717,6 @@
             margin-bottom: 10px;
         }
 
-        .discount-tiers-note {
-            font-size: 10px;
-            color: var(--accent-green);
-            background: rgba(0, 245, 180, 0.08);
-            border: 1px solid rgba(0, 245, 180, 0.2);
-            padding: 6px 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        }
-
         .queue-items-list {
             max-height: 180px;
             overflow-y: auto;
@@ -895,7 +886,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Mobile Responsive Adjustments */
+        /* Mobile Responsive Adjustments & Optimized Mobile Table View */
         @media (max-width: 768px) {
             header {
                 padding: 10px 3%;
@@ -925,6 +916,51 @@
             .form-full {
                 grid-column: span 1;
             }
+
+            /* Mobile optimization for Admin Dashboard Table */
+            #adminDashboard {
+                padding: 20px 3%;
+            }
+            .orders-table, .orders-table tbody, .orders-table tr, .orders-table td {
+                display: block;
+                width: 100%;
+            }
+            .orders-table thead {
+                display: none;
+            }
+            .orders-table tr {
+                background: var(--bg-card);
+                border: 1px solid var(--border-glass);
+                border-radius: 8px;
+                margin-bottom: 15px;
+                padding: 12px;
+            }
+            .orders-table td {
+                border-bottom: 1px solid rgba(0, 248, 255, 0.1);
+                padding: 8px 4px;
+                text-align: right;
+                position: relative;
+                padding-left: 45%;
+            }
+            .orders-table td:last-child {
+                border-bottom: none;
+                text-align: center;
+                padding-left: 4px;
+                padding-top: 12px;
+            }
+            .orders-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                top: 8px;
+                font-family: 'Cinzel', serif;
+                font-size: 10px;
+                color: var(--accent-cyan);
+                text-align: left;
+            }
+            .action-btns {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -948,7 +984,7 @@
             </li>
             <li><button class="queue-nav-btn" onclick="openQueueModal()">🛒 Queue <span class="queue-badge-count" id="queueCountBadge">0</span></button></li>
             <li><button class="client-status-btn" onclick="openClientStatusModal()">📦 Track</button></li>
-            <li><button class="admin-nav-btn" onclick="openAdminPanel()">⚙️ Admin</button></li>
+            <li><button class="admin-nav-btn" id="adminNavBtn" onclick="openAdminPanel()">⚙️ Admin</button></li>
         </ul>
     </header>
 
@@ -1079,10 +1115,7 @@
     <div id="queueModal">
         <div class="modal-box">
             <h3>Mixed Breed Acquisition Queue</h3>
-            <div class="modal-subtitle">Combined minimum order requirement is 6 specimens</div>
-            <div class="discount-tiers-note">
-                ✨ Volume Discount Tiers Applied Automatically: <strong>5% off</strong> for 10–19 specimens | <strong>10% off</strong> for 20+ specimens!
-            </div>
+            <div class="modal-subtitle">Minimum order requirement is 2 specimens</div>
             
             <label>Selected Morphs in Your Queue:</label>
             <div class="queue-items-list" id="queueItemsContainer"></div>
@@ -1128,10 +1161,7 @@
                 </div>
 
                 <div class="total-summary-box">
-                    <div>
-                        <span class="label-total">Estimated Total Amount:</span>
-                        <div id="appliedDiscountLabel" style="font-size:10px; color:var(--accent-green);">No bulk discount applied</div>
-                    </div>
+                    <span class="label-total">Estimated Total Amount:</span>
                     <span class="value-total" id="displayTotal">₹0.00</span>
                 </div>
                 <div class="payment-note">
@@ -1188,11 +1218,39 @@
     <!-- Script to handle Gallery, Orders, and Calculations -->
     <script>
         let selectionQueue = JSON.parse(localStorage.getItem("deocean_queue")) || [];
+        let isAdminLoggedIn = localStorage.getItem("deocean_admin_logged") === "true";
 
         document.addEventListener("DOMContentLoaded", function() {
             renderOrdersTable();
             updateQueueBadge();
+            checkAdminVisibility();
+
+            // Shortcut listener for Ctrl + Shift + A
+            document.addEventListener("keydown", function(e) {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    let pass = prompt("Enter Admin Password:");
+                    if (pass === "Deocean$126542") {
+                        isAdminLoggedIn = true;
+                        localStorage.setItem("deocean_admin_logged", "true");
+                        checkAdminVisibility();
+                        openAdminPanel();
+                        showNotification("Admin access granted!");
+                    } else if (pass !== null) {
+                        alert("Incorrect password!");
+                    }
+                }
+            });
         });
+
+        function checkAdminVisibility() {
+            const adminBtn = document.getElementById("adminNavBtn");
+            if (isAdminLoggedIn) {
+                adminBtn.style.display = "inline-block";
+            } else {
+                adminBtn.style.display = "none";
+            }
+        }
 
         function saveQueueToStorage() {
             localStorage.setItem("deocean_queue", JSON.stringify(selectionQueue));
@@ -1272,26 +1330,9 @@
         }
 
         function calculateQueueTotal() {
-            let totalSpecimens = selectionQueue.reduce((sum, item) => sum + item.quantity, 0);
-            let subtotal = selectionQueue.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            let discountMultiplier = 0;
-            let discountText = "No bulk discount applied";
-
-            if (totalSpecimens >= 20) {
-                discountMultiplier = 0.10;
-                discountText = "Applied: 10% Off (20+ specimens)";
-            } else if (totalSpecimens >= 10 && totalSpecimens <= 19) {
-                discountMultiplier = 0.05;
-                discountText = "Applied: 5% Off (10–19 specimens)";
-            }
-
-            let discountAmount = subtotal * discountMultiplier;
-            let finalTotal = subtotal - discountAmount;
-
-            document.getElementById("displayTotal").innerText = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
-            document.getElementById("appliedDiscountLabel").innerText = discountText;
-            return { totalSpecimens, finalTotal };
+            let total = selectionQueue.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById("displayTotal").innerText = `₹${total.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            return total;
         }
 
         function openGallery(strainName, folderPath) {
@@ -1332,14 +1373,14 @@
                 return;
             }
 
-            let { totalSpecimens, finalTotal } = calculateQueueTotal();
-            if (totalSpecimens < 6) {
-                alert("Error: Minimum combined order requirement is 6 specimens.");
+            let totalSpecimens = selectionQueue.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalSpecimens < 2) {
+                alert("Error: Minimum order requirement is 2 specimens.");
                 return;
             }
 
             let strainSummaryText = selectionQueue.map(item => `${item.name} (x${item.quantity})`).join(", ");
-            let calculatedTotalPrice = `₹${finalTotal.toLocaleString('en-IN', {minimumFractionDigits: 1})}`;
+            let calculatedTotalPrice = `₹${calculateQueueTotal().toLocaleString('en-IN', {minimumFractionDigits: 1})}`;
             let quantityString = `${totalSpecimens} Total Specimens`;
 
             const name = document.getElementById("buyerName").value;
@@ -1392,6 +1433,7 @@
         }
 
         function openAdminPanel() {
+            if (!isAdminLoggedIn) return;
             renderOrdersTable();
             document.getElementById("adminDashboard").style.display = "block";
         }
@@ -1417,15 +1459,15 @@
 
                 html += `
                     <tr>
-                        <td>${order.time}</td>
-                        <td><strong>${order.strain}</strong><br><span style="color:var(--accent-cyan);">Qty: ${order.quantity}</span><br><span style="color:var(--accent-green);">Total: ${order.price}</span></td>
-                        <td>${order.name}<br><small>${order.email}</small><br><small>${order.phone}</small></td>
-                        <td><small>${order.address}</small><br><small style="color:var(--accent-cyan);">Notes: ${order.notes}</small></td>
-                        <td>
+                        <td data-label="Time">${order.time}</td>
+                        <td data-label="Mixed Morphs, Qty & Total"><strong>${order.strain}</strong><br><span style="color:var(--accent-cyan);">Qty: ${order.quantity}</span><br><span style="color:var(--accent-green);">Total: ${order.price}</span></td>
+                        <td data-label="Client Details">${order.name}<br><small>${order.email}</small><br><small>${order.phone}</small></td>
+                        <td data-label="Shipping Destination"><small>${order.address}</small><br><small style="color:var(--accent-cyan);">Notes: ${order.notes}</small></td>
+                        <td data-label="Status & Feedback">
                             <span class="status-badge ${badgeClass}">${order.status}</span><br>
                             <small style="color:var(--text-muted);">Feedback: ${order.feedback}</small>
                         </td>
-                        <td>
+                        <td data-label="Actions">
                             <div class="action-btns">
                                 <button class="btn-action-confirm" onclick="updateOrderStatus(${index}, 'Confirmed')">Confirm</button>
                                 <button class="btn-action-reject" onclick="updateOrderStatus(${index}, 'Rejected')">Reject</button>
